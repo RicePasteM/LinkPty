@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.cfg
+setup.py
+link_pty/__init__.py
+link_pty/terminal_manager.py
+link_pty.egg-info/PKG-INFO
+link_pty.egg-info/SOURCES.txt
+link_pty.egg-info/dependency_links.txt
+link_pty.egg-info/entry_points.txt
+link_pty.egg-info/requires.txt
+link_pty.egg-info/top_level.txt

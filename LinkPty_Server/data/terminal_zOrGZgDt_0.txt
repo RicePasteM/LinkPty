@@ -1,0 +1,15 @@
+Terminal 0 Log Created at 2024-10-17 18:50:38.321176
+bash: cannot set terminal process group (766): Inappropriate ioctl for device
+bash: no job control in this shell
+[?2004hroot@27ec67508943:/docker_client# 123123
+[?2004lbash: 123123: command not found
+[?2004hroot@27ec67508943:/docker_client# 123123
+[?2004lbash: 123123: command not found
+[?2004hroot@27ec67508943:/docker_client# 
+[?2004l[?2004hroot@27ec67508943:/docker_client# 123123123[K[K[K[K[K[K[K[K[K123123
+[?2004lbash: 123123: command not found
+[?2004hroot@27ec67508943:/docker_client# 321
+[?2004lbash: 321: command not found
+[?2004hroot@27ec67508943:/docker_client# 123
+[?2004lbash: 123: command not found
+[?2004hroot@27ec67508943:/docker_client# 

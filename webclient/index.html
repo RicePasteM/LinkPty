@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./favicon.ico" rel="icon" type="image/x-icon" />
+    <script src="https://unpkg.com/xterm/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>LinkPty - 基于 WebSocket 服务器的伪终端</title>
+</head>
+
+<body>
+    <div class="tabs">
+        <div class="tab">
+            <span class="name" style="display: flex; align-items:center; margin: 0 10px;">
+                <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>
+        </div>
+    </div>
+    <div class="terminals">
+
+    </div>
+
+    <script>
+
+        window.onload = async function () {
+
+            // const SERVER_URL = "linkpty.codesocean.top:43143";
+            const SERVER_URL = "localhost:8000";
+            const tabs = [];
+
+            let selectedTab = undefined;
+
+
+            const { value: key } = await Swal.fire({
+                title: "Please input key to connect",
+                input: "text",
+                inputLabel: "Terminal key given:",
+                inputValue: "",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                inputValidator: (value) => {
+                    if (!value) {
+                        return "You need to write something!";
+                    }
+                }
+            });
+            console.log(key)
+            if(key == "" || !key) location.reload();
+
+            document.title = key + " - " + document.title
+            let socket = new WebSocket(`ws://${SERVER_URL}/dockerclient?key=${key}`);
+
+            socket.onopen = function (event) {
+                setInterval(() => {
+                    socket.send(JSON.stringify({
+                        "operation": "PING"
+                    }))
+                }, 60000)
+            }
+
+            // 显示终端输出
+            socket.onmessage = function (event) {
+                let jsonData = JSON.parse(event.data);
+                if (jsonData.operation == "CREATE_TERMINAL_DONE") {
+                    handleCreateNewTabDone(jsonData.terminal_index)
+                } else if (jsonData.operation == "RECEIVE_SERVEROUTPUT") {
+                    for (let item of tabs) {
+                        if (item.tabIndex == jsonData.terminal_index) {
+                            item.term.write(jsonData.data);
+                        }
+                    }
+                }
+            };
+
+            // 首先检查状态
+            setTimeout(() => {
+                fetch(`http://${SERVER_URL}/get_status?key=${key}`, {
+                    method: 'GET',
+                    headers: new Headers(),
+                    redirect: 'follow'
+                })
+                    .then(response => response.text())
+                    .then(function (result) {
+                        result = JSON.parse(result);
+                        if (result.result == "offline") {
+                            alert("该主机已经离线，将加载历史记录。")
+                            for (let terminal of result.terminals) {
+                                handleCreateNewTabDone(terminal.terminal_index, false)
+                                handleGetTerminalHistory(terminal.terminal_index)
+                            }
+                        } else if (result.result == "success") {
+                            if (result.terminals.length == 0) {
+                                handleCreateNewTab();
+                            } else {
+                                for (let terminal of result.terminals) {
+                                    handleCreateNewTabDone(terminal.terminal_index, terminal.is_online)
+                                    handleGetTerminalHistory(terminal.terminal_index)
+                                }
+                            }
+                        } else {
+                            alert(result.msg);
+                        }
+                    })
+                    .catch(error => { console.log(error); alert("检查状态时出错") });
+            }, 500);
+
+
+
+
+            function handleCreateNewTab() {
+                fetch(`http://${SERVER_URL}/create_terminal?key=${key}`, {
+                    method: 'GET',
+                    headers: new Headers(),
+                    redirect: 'follow'
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        result = JSON.parse(result);
+                        if (result.result != "success") {
+                            alert(result.msg)
+                        }
+                    })
+                    .catch(error => alert("创建新标签时出错"));
+            }
+
+            function handleCreateNewTabDone(terminalIndex, isOnline = true) {
+                console.log(terminalIndex);
+                let terminalsDom = document.querySelector(".terminals");
+                let terminalDom = document.createElement("div");
+                terminalDom.classList.add(".terminal");
+                let term = new Terminal({
+                    scrollback: 2147483647
+                });
+                // 初始化FitAddon实例
+                let fitAddon = new FitAddon.FitAddon();
+                // 加载FitAddon
+                term.loadAddon(fitAddon);
+                tabs.push(
+                    {
+                        name: "新标签",
+                        tabIndex: terminalIndex,
+                        terminalDom,
+                        term,
+                        isOnline
+                    }
+                )
+                terminalsDom.appendChild(terminalDom);
+                term.open(terminalDom);
+                fitAddon.fit();
+                if (isOnline) {
+                    socket.send(JSON.stringify({
+                        "operation": "RECEIVE_USERINPUT",
+                        "data": `stty cols ${term.cols} rows ${term.rows}\r\n`,
+                        "terminal_index": terminalIndex
+                    }));
+                    term.onData(function (input) {
+                        socket.send(JSON.stringify({
+                            "operation": "RECEIVE_USERINPUT",
+                            "data": input,
+                            "terminal_index": terminalIndex
+                        }));
+                    });
+                } else {
+                    term.write("\r\nThis terminal is offline, below are histories.\r\n")
+                }
+                selectedTab = tabs[tabs.length - 1];
+                drawTabs();
+            }
+
+            function handleCloseTerminal(terminalIndex) {
+                fetch(`http://${SERVER_URL}/terminate_terminal?key=${key}&terminal_index=${terminalIndex}`, {
+                    method: 'GET',
+                    headers: new Headers(),
+                    redirect: 'follow'
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        result = JSON.parse(result);
+                        if (result.result != "success") {
+                            alert(result.msg)
+                        } else {
+                            for (let i = 0; i <= tabs.length; i++) {
+                                let item = tabs[i];
+                                if (item.tabIndex == terminalIndex) {
+                                    item.terminalDom.parentElement.removeChild(item.terminalDom);
+                                    tabs.splice(i, 1);
+                                    if (item == selectedTab) {
+                                        if (tabs.length == 0) handleCreateNewTab(); else selectedTab = tabs[0];
+                                    }
+                                    break;
+                                }
+                            }
+                            drawTabs();
+                        }
+                    })
+                    .catch(error => alert("连接失败"));
+            }
+
+            function drawTabs() {
+                let tabsDom = document.querySelector(".tabs");
+                tabsDom.innerHTML = `<span class="name" style="display: flex; align-items:center; margin: 0 10px;">
+                    <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>`;
+                for (let item of tabs) {
+                    let tabDom = document.createElement("div");
+                    tabDom.classList.add("tab");
+                    if (item == selectedTab) tabDom.classList.add("selected");
+                    tabDom.innerHTML = `
+                        <span class="name"> <div class="status ${item.isOnline ? 'online' : 'offline'}"></div> #${item.tabIndex} </span> <button>x</button>
+                    `
+                    tabsDom.appendChild(tabDom);
+                    let closeBtnDom = tabDom.querySelector("button");
+                    tabDom.onclick = function (event) {
+                        selectedTab = item;
+                        drawTabs();
+                    }
+                    closeBtnDom.onclick = function (event) {
+                        handleCloseTerminal(item.tabIndex);
+                        event.stopPropagation();
+                    }
+                    // 控制Terminal的显隐
+                    if (selectedTab == item) {
+                        item.terminalDom.style.display = "block"
+                    } else {
+                        item.terminalDom.style.display = "none"
+                    }
+                }
+                let newTabButtonDom = document.createElement("div")
+                newTabButtonDom.onclick = handleCreateNewTab;
+                newTabButtonDom.innerHTML = `<span>+</span>`
+                newTabButtonDom.classList.add("tab")
+                newTabButtonDom.classList.add("new")
+                tabsDom.appendChild(newTabButtonDom);
+            }
+
+            function handleGetTerminalHistory(terminalIndex) {
+                tabs[terminalIndex].term.write("\r\nHistory records are stilling being loaded, please wait...\r\n")
+                fetch(`http://${SERVER_URL}/get_history?key=${key}&terminal_index=${terminalIndex}`, {
+                    method: 'GET',
+                    headers: new Headers(),
+                    redirect: 'follow'
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        result = JSON.parse(result);
+                        if (result.result != "success") {
+                            alert(result.msg)
+                        } else {
+                            for (let item of tabs) {
+                                if (item.tabIndex == terminalIndex) {
+                                    for (let line of result.history) {
+                                        if (line != "") {
+                                            item.term.write(line + '\r\n');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => { console.log(error); alert("获取历史数据时出错") });
+            }
+
+        }
+    </script>
+</body>
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+
+        .tabs {
+            display: flex;
+            width: 100%;
+            background-color: #F7F7F7;
+            border-bottom: 2px solid #E6E6E6;
+            box-sizing: border-box;
+            height: 35px;
+
+            .tab {
+                height: 100%;
+                display: flex;
+                width: 100px;
+                padding: 0 20px;
+                justify-content: space-between;
+                align-items: center;
+                cursor: pointer;
+                box-sizing: border-box;
+
+                .name {
+                    display: flex;
+                    align-items: center;
+
+                    .status {
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 100%;
+                        margin-right: 5px;
+                    }
+
+                    .status.online {
+                        background-color: #B5CEA8;
+                    }
+
+                    .status.offline {
+                        background-color: #F88069;
+                    }
+                }
+
+                button {
+                    border-radius: 100%;
+                    border: 0;
+
+                }
+            }
+
+            .tab.new {
+                width: 20px;
+                justify-content: center;
+            }
+
+            .tab:hover {
+                background-color: #EAEAEA;
+            }
+
+            .tab.selected {
+                background-color: white;
+                border-left: 1px solid #D2D2D2;
+                border-right: 1px solid #D2D2D2;
+                border-top: 1px solid #D2D2D2;
+            }
+        }
+
+        .terminals {
+            position: relative;
+            height: calc(100vh - 40px);
+
+            .terminal {
+                width: 100vw;
+                height: calc(100vh - 40px);
+            }
+        }
+    }
+</style>
+
+</html>

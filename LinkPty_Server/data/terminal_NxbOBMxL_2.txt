@@ -1,0 +1,38 @@
+Terminal 2 Log Created at 2024-10-18 16:46:15.500791
+bash: cannot set terminal process group (1633): Inappropriate ioctl for device
+bash: no job control in this shell
+[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# ;.[K[K;s
+[?2004lbash: syntax error near unexpected token `;'
+[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# stty cols 134 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# Terminal 2 Log Created at 2024-10-18 16:51:25.455728
+stty cols 134 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# stty cols 134 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# ls
+[?2004lbin  boot  dev	docker_client  etc  home  lib  lib64  media  mnt  opt  proc  root  run	sbin  srv  sys	tmp  usr  var
+[?2004hroot@27ec67508943:/# stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# Terminal 2 Log Created at 2024-10-18 16:53:20.890537
+stty cols 81 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# ls
+[?2004lbin   dev	     etc   lib	  media  opt   root  sbin  sys	usr
+boot  docker_client  home  lib64  mnt	 proc  run   srv   tmp	var
+[?2004hroot@27ec67508943:/# 

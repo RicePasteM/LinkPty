@@ -1,0 +1,8 @@
+Terminal 0 Log Created at 2024-10-18 16:40:17.446926
+bash: cannot set terminal process group (1618): Inappropriate ioctl for device
+bash: no job control in this shell
+[?2004hroot@27ec67508943:/# stty cols 83 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# 123321
+[?2004lbash: 123321: command not found
+[?2004hroot@27ec67508943:/# Terminal 0 Log Created at 2024-10-18 16:40:31.558417

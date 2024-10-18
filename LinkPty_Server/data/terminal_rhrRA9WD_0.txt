@@ -1,0 +1,6 @@
+Terminal 0 Log Created at 2024-10-17 16:52:38.398985
+bash: cannot set terminal process group (693): Inappropriate ioctl for device
+bash: no job control in this shell
+[?2004hroot@27ec67508943:/docker_client# ls
+[?2004lmain.py  test.py
+[?2004hroot@27ec67508943:/docker_client# 

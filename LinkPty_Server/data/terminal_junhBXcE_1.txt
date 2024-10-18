@@ -1,0 +1,157 @@
+Terminal 1 Log Created at 2024-10-17 19:11:48.359507
+bash: cannot set terminal process group (801): Inappropriate ioctl for device
+bash: no job control in this shell
+[?2004hroot@27ec67508943:/docker_client# \[K
+[?2004l[?2004hroot@27ec67508943:/docker_client# 
+[?2004l[?2004hroot@27ec67508943:/docker_client# apt get [K[K[K[K[Kin[K[K instaoll[K[K[K[K[Ktall vi
+[?2004lReading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 94%Reading package lists... 94%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
+Reading state information... 0% Reading state information... 0%Reading state information... Done
+[1;31mE: [0mUnable to locate package vi[0m
+[?2004hroot@27ec67508943:/docker_client# apt install vi[K[K[K[K[K[K[K[K[K[Kupdate
+[?2004l[33m0% [Working][0m            Hit:1 http://deb.debian.org/debian bullseye InRelease
+[33m0% [Waiting for headers][0m                        Get:2 http://security.debian.org/debian-security bullseye-security InRelease [27.2 kB]
+[33m0% [Waiting for headers] [2 InRelease 17.4 kB/27.2 kB 64%][0m[33m                                                          0% [Waiting for headers][0m[33m0% [Waiting for headers][0m[33m0% [Waiting for headers][0m                        Get:3 http://deb.debian.org/debian bullseye-updates InRelease [44.1 kB]
+[33m0% [3 InRelease 27.5 kB/44.1 kB 62%] [Waiting for headers][0m[33m                                                          0% [Waiting for headers][0m[33m33% [Waiting for headers][0m                         Get:4 http://security.debian.org/debian-security bullseye-security/main amd64 Packages [303 kB]
+[33m39% [4 Packages 26.1 kB/303 kB 9%][0m[33m                                  98% [Working][0m[33m98% [4 Packages store 0 B][0m[33m                          100% [Working][0m              Fetched 374 kB in 1s (427 kB/s)
+Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%^CReading package lists... 94%Reading package lists... 94%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
+Reading state information... 0% Reading state information... 0%Reading state information... Done
+243 packages can be upgraded. Run 'apt list --upgradable' to see them.
+[?2004hroot@27ec67508943:/docker_client# apt update[K[K[K[K[K[Kinstall python
+[?2004lReading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 94%Reading package lists... 94%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
+Reading state information... 0% Reading state information... 0%Reading state information... Done
+Note, selecting 'python-is-python2' instead of 'python'
+The following additional packages will be installed:
+  libpython2-stdlib libpython2.7-minimal libpython2.7-stdlib mailcap
+  mime-support python2 python2-minimal python2.7 python2.7-minimal
+Suggested packages:
+  python2-doc python-tk python2.7-doc binfmt-support
+The following NEW packages will be installed:
+  libpython2-stdlib libpython2.7-minimal libpython2.7-stdlib mailcap
+  mime-support python-is-python2 python2 python2-minimal python2.7
+  python2.7-minimal
+0 upgraded, 10 newly installed, 0 to remove and 243 not upgraded.
+Need to get 3998 kB of archives.
+After this operation, 16.3 MB of additional disk space will be used.
+Do you want to continue? [Y/n] ^C^C^C
+[33m0% [Working][0m[33m0% [Waiting for headers][0m                        Get:1 http://deb.debian.org/debian bullseye/main amd64 libpython2.7-minimal amd64 2.7.18-8+deb11u1 [397 kB]
+[33m0% [1 libpython2.7-minimal 20.5 kB/397 kB 5%][0m[33m                                             10% [Working][0m[33m10% [Waiting for headers][0m                         Get:2 http://deb.debian.org/debian bullseye/main amd64 python2.7-minimal amd64 2.7.18-8+deb11u1 [1301 kB]
+[33m10% [2 python2.7-minimal 20.5 kB/1301 kB 2%][0m[33m                                            38% [Working][0m^C             Get:3 http://deb.debian.org/debian bullseye/main amd64 python2-minimal amd64 2.7.18-3 [34.2 kB]
+[33m38% [3 python2-minimal 23.2 kB/34.2 kB 68%][0m[33m                                           41% [Working][0m             Get:4 http://deb.debian.org/debian bullseye/main amd64 mailcap all 3.69 [31.7 kB]
+[33m41% [4 mailcap 15.9 kB/31.7 kB 50%][0m[33m                                   43% [Working][0m             Get:5 http://deb.debian.org/debian bullseye/main amd64 mime-support all 3.66 [10.9 kB]
+[33m44% [5 mime-support 10.9 kB/10.9 kB 100%][0m[33m                                         46% [Working][0m[33m46% [Waiting for headers][0m                         Get:6 http://deb.debian.org/debian bullseye/main amd64 libpython2.7-stdlib amd64 2.7.18-8+deb11u1 [1864 kB]
+[33m46% [6 libpython2.7-stdlib 15.9 kB/1864 kB 1%][0m[33m                                              85% [Working][0m^C^C^C             Get:7 http://deb.debian.org/debian bullseye/main amd64 python2.7 amd64 2.7.18-8+deb11u1 [311 kB]
+[33m85% [7 python2.7 23.2 kB/311 kB 7%][0m[33m                                   93% [Working][0m             Get:8 http://deb.debian.org/debian bullseye/main amd64 libpython2-stdlib amd64 2.7.18-3 [21.2 kB]
+[33m93% [8 libpython2-stdlib 14.5 kB/21.2 kB 68%][0m[33m                                             95% [Working][0m             Get:9 http://deb.debian.org/debian bullseye/main amd64 python2 amd64 2.7.18-3 [24.5 kB]
+[33m96% [9 python2 11.6 kB/24.5 kB 47%][0m[33m                                   98% [Working][0m             Get:10 http://deb.debian.org/debian bullseye/main amd64 python-is-python2 all 2.7.18-9 [2940 B]
+[33m98% [10 python-is-python2 2940 B/2940 B 100%][0m[33m                                             100% [Working][0m              Fetched 3998 kB in 4s (1046 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libpython2.7-minimal:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 57317 files and directories currently installed.)
+Preparing to unpack .../0-libpython2.7-minimal_2.7.18-8+deb11u1_amd64.deb ...
+Unpacking libpython2.7-minimal:amd64 (2.7.18-8+deb11u1) ...
+Selecting previously unselected package python2.7-minimal.
+Preparing to unpack .../1-python2.7-minimal_2.7.18-8+deb11u1_amd64.deb ...
+Unpacking python2.7-minimal (2.7.18-8+deb11u1) ...
+Selecting previously unselected package python2-minimal.
+Preparing to unpack .../2-python2-minimal_2.7.18-3_amd64.deb ...
+Unpacking python2-minimal (2.7.18-3) ...
+Selecting previously unselected package mailcap.
+Preparing to unpack .../3-mailcap_3.69_all.deb ...
+Unpacking mailcap (3.69) ...
+Selecting previously unselected package mime-support.
+Preparing to unpack .../4-mime-support_3.66_all.deb ...
+Unpacking mime-support (3.66) ...
+Selecting previously unselected package libpython2.7-stdlib:amd64.
+Preparing to unpack .../5-libpython2.7-stdlib_2.7.18-8+deb11u1_amd64.deb ...
+Unpacking libpython2.7-stdlib:amd64 (2.7.18-8+deb11u1) ...
+Selecting previously unselected package python2.7.
+Preparing to unpack .../6-python2.7_2.7.18-8+deb11u1_amd64.deb ...
+Unpacking python2.7 (2.7.18-8+deb11u1) ...
+Selecting previously unselected package libpython2-stdlib:amd64.
+Preparing to unpack .../7-libpython2-stdlib_2.7.18-3_amd64.deb ...
+Unpacking libpython2-stdlib:amd64 (2.7.18-3) ...
+Setting up libpython2.7-minimal:amd64 (2.7.18-8+deb11u1) ...
+Setting up python2.7-minimal (2.7.18-8+deb11u1) ...
+Linking and byte-compiling packages for runtime python2.7...
+Setting up python2-minimal (2.7.18-3) ...
+Selecting previously unselected package python2.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 58087 files and directories currently installed.)
+Preparing to unpack .../python2_2.7.18-3_amd64.deb ...
+Unpacking python2 (2.7.18-3) ...
+Selecting previously unselected package python-is-python2.
+Preparing to unpack .../python-is-python2_2.7.18-9_all.deb ...
+Unpacking python-is-python2 (2.7.18-9) ...
+Setting up mailcap (3.69) ...
+Setting up mime-support (3.66) ...
+Setting up libpython2.7-stdlib:amd64 (2.7.18-8+deb11u1) ...
+Setting up python2.7 (2.7.18-8+deb11u1) ...
+Setting up libpython2-stdlib:amd64 (2.7.18-3) ...
+Setting up python2 (2.7.18-3) ...
+Setting up python-is-python2 (2.7.18-9) ...
+[?2004hroot@27ec67508943:/docker_client# ls
+[?2004lmain.py  test.py
+[?2004hroot@27ec67508943:/docker_client# vimn [K[K main.py
+[?2004l[?1000h[?1049h[22;0;0t[>4;2m[?1h=[?2004h[?1004h[1;24r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[24;1H"main.py" [dos] 69L, 2799B[2;1H¨Œ[6n[2;1H  [3;1HPzz\[0%m[6n[3;1H           [1;1H[>c]10;?]11;?[2;1H[33masync[m [33mdef[m [36mread_and_forward_output[m(ws, master_fd: [36mint[m, terminal_index: [36mint[m):[2;76H[K[3;1H    [31m"""³ÖÐø¶ÁÈ¡Î±ÖÕ¶ËµÄÊä³ö²¢Í¨¹ý WebSocket ×ª·¢¸ø¿Í»§¶Ë"""[m[3;60H[K[4;5H[33mtry[m:[5;9H[36mprint[m([31m"hello"[m)[6;9H[33mwhile[m [36mTrue[m:[7;13H[33mawait[m asyncio.sleep([31m0.1[m)  [34m# ·Ç×èÈûµÈ´ý[m[8;13Hrlist, _, _ = select.select([master_fd], [], [], [31m0.1[m)[9;13H[33mif[m master_fd [33min[m rlist:[10;17Houtput = os.read(master_fd, [31m2048[m).decode([31m"utf-8"[m, errors=[31m"ignoree[11;1H"[m)[12;17H[33mawait[m ws.send(json.dumps({[31m"operation"[m: [31m"RECEIVE_SERVEROUTPUT"[m, [31m""[13;1Hterminal_index"[m: terminal_index, [31m"data"[m: output}))
+    [33mexcept[m [32mException[m [33mas[m e:[15;9H[36mprint[m(f[31m"Error while reading pty output: {e}"[m)
+
+[33masync[m [33mdef[m [36mon_message[m(ws):
+    [33mglobal[m key
+    [33masync[m [33mfor[m message [33min[m ws:[20;9H[33mtry[m:[21;13H[36mprint[m(message)[22;13Hdata_json = json.loads(message)[23;13Hoperation = data_json[[31m"operation"[m][24;63H29,1[10C27%[18;1H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[?1000l[?1002h[?12$p[27m[23m[29m[m[H[2J[?25l[2;1H[1m[33masync[m [1m[33mdef[m [1m[36mread_and_forward_output[m(ws, master_fd: [1m[36mint[m, terminal_index: [1m[36mint[m):
+    [1m[35m"""³ÖÐø¶ÁÈ¡Î±ÖÕ¶ËµÄÊä³ö²¢Í¨¹ý WebSocket ×ª·¢¸ø¿Í»§¶Ë"""[m
+    [1m[33mtry[m:[5;9H[1m[36mprint[m([1m[35m"hello"[m)[6;9H[1m[33mwhile[m [1m[36mTrue[m:[7;13H[1m[33mawait[m asyncio.sleep([1m[35m0.1[m)  [1m[36m# ·Ç×èÈûµÈ´ý[m[8;13Hrlist, _, _ = select.select([master_fd], [], [], [1m[35m0.1[m)[9;13H[1m[33mif[m master_fd [1m[33min[m rlist:[10;17Houtput = os.read(master_fd, [1m[35m2048[m).decode([1m[35m"utf-8"[m, errors=[1m[35m"ignoree[11;1H"[m)[12;17H[1m[33mawait[m ws.send(json.dumps({[1m[35m"operation"[m: [1m[35m"RECEIVE_SERVEROUTPUT"[m, [1m[35m""[13;1Hterminal_index"[m: terminal_index, [1m[35m"data"[m: output}))
+    [1m[33mexcept[m [1m[32mException[m [1m[33mas[m e:[15;9H[1m[36mprint[m(f[1m[35m"Error while reading pty output: {e}"[m)
+
+[1m[33masync[m [1m[33mdef[m [1m[36mon_message[m(ws):
+    [1m[33mglobal[m key
+    [1m[33masync[m [1m[33mfor[m message [1m[33min[m ws:[20;9H[1m[33mtry[m:[21;13H[1m[36mprint[m(message)[22;13Hdata_json = json.loads(message)[23;13Hoperation = data_json[[1m[35m"operation"[m][24;63H29,1[10C27%"main.py" [dos] 69L, 2799B[18;1H[?25h[?25l[24;1HType  :qa  and press <Enter> to exit Vim[24;63H[K[24;63H29,1[10C27%[18;1H[?25h[?25l[24;63H[K[24;63H29,1[10C27%[18;1H[?25h[?25l[24;53H^M[18;1H[24;53H  [18;5H[1;23r[23;1H
+[1;24r[23;13H[1m[33mif[m operation == [1m[35m"ASSIGN_KEY"[m:[24;1H[K[24;63H30,5[10C29%[18;5H[?25h[?25l[24;1HType  :qa  and press <Enter> to exit Vim[24;63H[K[24;63H30,5[10C29%[18;5H[?25h[?25l[24;53H^M[18;5H[24;53H  [18;9H[1;23r[23;1H
+[1;24r[23;17Hkey = data_json[[1m[35m'key'[m][24;1H[K[24;63H31,9[10C31%[18;9H[?25h[?25l[24;1HType  :qa  and press <Enter> to exit Vim[24;63H[K[24;63H31,9[10C31%[18;9H[?25h[?25l[24;53H:[18;9H[24;1H[K[24;1H:[?25hqa[?25l[?1002l[?2004l[>4;m[23;2t[23;1t[24;1H[K[24;1H[?1004l[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t[?2004hroot@27ec67508943:/docker_client# ls
+[?2004lmain.py  test.py
+[?2004hroot@27ec67508943:/docker_client# vim test.py
+[?2004l[?1000h[?1049h[22;0;0t[>4;2m[?1h=[?2004h[?1004h[1;24r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[24;1H"test.py" [dos] 30L, 869B[2;1H¨Œ[6n[2;1H  [3;1HPzz\[0%m[6n[3;1H           [1;1H[>c]10;?]11;?[1;1H[35mimport[m websocket[2;1H[K[3;1H[33mdef[m [36mon_message[m(ws, message):[3;29H[K[4;5H[36mprint[m(f[31m"ÊÕµ½·þÎñÆ÷µÄÏûÏ¢: {message}"[m)
+
+[33mdef[m [36mon_error[m(ws, error):
+    [36mprint[m(f[31m"³öÏÖ´íÎó: {error}"[m)  [34m# ´òÓ¡³ö´íÎóÏêÏ¸ÐÅÏ¢[m
+
+[33mdef[m [36mon_close[m(ws):
+    [36mprint[m([31m"Á¬½Ó¹Ø±Õ"[m)
+
+[33mdef[m [36mon_open[m(ws):
+    [36mprint[m([31m"Á¬½Ó½¨Á¢"[m)
+    [33mtry[m:[15;9H[34m# ÔÚÁ¬½Ó½¨Á¢ºó·¢ËÍÏûÏ¢[m[16;9Hws.send([31m"Hello from client!"[m)[17;9H[36mprint[m([31m"ÏûÏ¢ÒÑ·¢ËÍ"[m)
+    [33mexcept[m [32mException[m [33mas[m e:[19;9H[36mprint[m(f[31m"·¢ËÍÏûÏ¢Ê±³ö´í: {e}"[m)
+
+[33mif[m __name__ == [31m"__main__"[m:
+    websocket_url = [31m"ws://127.0.0.1:8000/dockerserver"[m[24;63H1,1[11CTop[1;1H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[?1000l[?1002h[?12$p[27m[23m[29m[m[H[2J[?25l[1;1H[1m[34mimport[m websocket
+
+[1m[33mdef[m [1m[36mon_message[m(ws, message):
+    [1m[36mprint[m(f[1m[35m"ÊÕµ½·þÎñÆ÷µÄÏûÏ¢: {message}"[m)
+
+[1m[33mdef[m [1m[36mon_error[m(ws, error):
+    [1m[36mprint[m(f[1m[35m"³öÏÖ´íÎó: {error}"[m)  [1m[36m# ´òÓ¡³ö´íÎóÏêÏ¸ÐÅÏ¢[m
+
+[1m[33mdef[m [1m[36mon_close[m(ws):
+    [1m[36mprint[m([1m[35m"Á¬½Ó¹Ø±Õ"[m)
+
+[1m[33mdef[m [1m[36mon_open[m(ws):
+    [1m[36mprint[m([1m[35m"Á¬½Ó½¨Á¢"[m)
+    [1m[33mtry[m:[15;9H[1m[36m# ÔÚÁ¬½Ó½¨Á¢ºó·¢ËÍÏûÏ¢[m[16;9Hws.send([1m[35m"Hello from client!"[m)[17;9H[1m[36mprint[m([1m[35m"ÏûÏ¢ÒÑ·¢ËÍ"[m)
+    [1m[33mexcept[m [1m[32mException[m [1m[33mas[m e:[19;9H[1m[36mprint[m(f[1m[35m"·¢ËÍÏûÏ¢Ê±³ö´í: {e}"[m)
+
+[1m[33mif[m __name__ == [1m[35m"__main__"[m:
+    websocket_url = [1m[35m"ws://127.0.0.1:8000/dockerserver"[m[24;63H1,1[11CTop"test.py" [dos] 30L, 869B[1;1H[?25h[?25l[24;53H^[[1;1H[24;53H  [1;1H[24;53H^[[1;1H[24;53H  [1;1H[?25h[?25l[24;53H:[1;1H[24;1H[K[24;1H:[?25hq[?25l[?1002l[?2004l[>4;m[23;2t[23;1t[24;1H[K[24;1H[?1004l[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t[?2004hroot@27ec67508943:/docker_client# 2RR0;276;0c10;rgb:ffff/ffff/ffff11;rgb:0000/0000/000012;2$y2RR0;276;0c10;rgb:ffff/ffff/ffff11;rgb:0000/0000/000012;2$y
+[?2004lbash: 2RR0: command not found
+bash: 276: command not found
+bash: 0c10: command not found
+bash: rgb:ffff/ffff/ffff11: No such file or directory
+bash: rgb:0000/0000/000012: No such file or directory
+bash: 2: command not found
+bash: 276: command not found
+bash: 0c10: command not found
+bash: rgb:ffff/ffff/ffff11: No such file or directory
+bash: rgb:0000/0000/000012: No such file or directory
+bash: 2: command not found
+[?2004hroot@27ec67508943:/docker_client# 

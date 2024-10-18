@@ -1,0 +1,9 @@
+Terminal 0 Log Created at 2024-10-18 16:32:25.560610
+bash: cannot set terminal process group (1578): Inappropriate ioctl for device
+bash: no job control in this shell
+[?2004hroot@27ec67508943:/# stty cols 83 rows 43
+[?2004l[?2004hroot@27ec67508943:/# 
+[?2004l[?2004hroot@27ec67508943:/# ls
+[?2004lbin   dev	     etc   lib	  media  opt   root  sbin  sys	usr
+boot  docker_client  home  lib64  mnt	 proc  run   srv   tmp	var
+[?2004hroot@27ec67508943:/# Terminal 0 Log Created at 2024-10-18 16:32:37.114579

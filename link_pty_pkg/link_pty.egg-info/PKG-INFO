@@ -1,0 +1,35 @@
+Metadata-Version: 2.1
+Name: link-pty
+Version: 0.2.8
+Summary: A package to manage pseudo terminals via WebSocket
+Home-page: https://github.com/ricepastem/link_pty
+Author: ricepastem
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: websockets
+Requires-Dist: requests
+
+# link_pty
+
+link_pty is a Python package that allows you to manage pseudo terminals via WebSocket. It supports creating, managing, and interacting with terminals remotely through a WebSocket connection.
+
+## Installation
+
+To install the package:
+
+```bash
+pip install link_pty
+```
+
+## Usage
+After installing, you can run the terminal manager with:
+
+```bash
+link-pty --base-url "your_base_url_here"
+```
+
+If no base URL is provided, it defaults to linkpty.codesocean.top:43143.
