@@ -14,8 +14,8 @@
 
 <body>
     <div class="tabs">
-        <div class="tab">
-            <span class="name" style="display: flex; align-items:center; margin: 0 10px;">
+        <div class="tab" style="width: auto" onclick="window.open('https:\/\/github.com/RicePasteM/LinkPty')">
+            <span class="name" style="display: flex; align-items:center;">
                 <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>
         </div>
     </div>
@@ -27,8 +27,8 @@
 
         window.onload = async function () {
 
-            // const SERVER_URL = "linkpty.codesocean.top:43143";
-            const SERVER_URL = "localhost:8000";
+            const SERVER_URL = "linkpty.codesocean.top:43143";
+            // const SERVER_URL = "localhost:8000";
             const tabs = [];
 
             let selectedTab = undefined;
@@ -48,7 +48,7 @@
                 }
             });
             console.log(key)
-            if(key == "" || !key) location.reload();
+            if (key == "" || !key) location.reload();
 
             document.title = key + " - " + document.title
             let socket = new WebSocket(`ws://${SERVER_URL}/dockerclient?key=${key}`);
@@ -201,8 +201,10 @@
 
             function drawTabs() {
                 let tabsDom = document.querySelector(".tabs");
-                tabsDom.innerHTML = `<span class="name" style="display: flex; align-items:center; margin: 0 10px;">
-                    <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>`;
+                tabsDom.innerHTML = `<div class="tab" style="width: auto" onclick="window.open('https:\/\/github.com/RicePasteM/LinkPty')">
+                    <span class="name" style="display: flex; align-items:center;">
+                        <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>
+                </div>`;
                 for (let item of tabs) {
                     let tabDom = document.createElement("div");
                     tabDom.classList.add("tab");
