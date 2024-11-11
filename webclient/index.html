@@ -7,25 +7,95 @@
     <link href="./favicon.ico" rel="icon" type="image/x-icon" />
     <script src="https://unpkg.com/xterm/lib/xterm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-search@latest/lib/xterm-addon-search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@latest/lib/xterm-addon-web-links.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-search-bar@latest/lib/xterm-addon-search-bar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="./jquery.js"></script>
+    <script src="./commonUtils.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>LinkPty - 基于 WebSocket 服务器的伪终端</title>
 </head>
 
 <body>
-    <div class="tabs">
-        <div class="tab" style="width: auto" onclick="window.open('https:\/\/github.com/RicePasteM/LinkPty')">
-            <span class="name" style="display: flex; align-items:center;">
-                <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>
+
+    <div class="tabWrapper">
+        <div class="tabs">
+            <div class="tab" style="width: auto" onclick="window.open('https:\/\/github.com/RicePasteM/LinkPty')">
+                <span class="name" style="display: flex; align-items:center;">
+                    <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>
+            </div>
+        </div>
+        <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;" onclick="window.showSearchBar()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="transform: scale(1)">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+        </div>
+        <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;" onclick="window.settingsModal.show()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+            </svg>
         </div>
     </div>
     <div class="terminals">
 
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="settingsModalLabel">Settings</h3>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="fontSelect">终端字体</label>
+                        <select id="fontSelect" class="form-control">
+                            <option value="monospace">Monospace</option>
+                            <option value="Consolas">Consolas</option>
+                            <option value="Courier New">Courier New</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fontSizeSelect">终端字号</label>
+                        <input type="number" id="fontSizeSelect" class="form-control" value="14" min="8" max="72" />
+                    </div>
+                    <!-- <div class="form-group">
+                        <div>结束任务 </div>
+                        <button type="button" id="stopTask" class="btn btn-danger" onclick="stopTask()">停止任务</button>
+                    </div>
+                    <div class="form-group">
+                        <div>强制重连 </div>
+                        <button type="button" id="forceReconnect" class="btn btn-warning" onclick="forceReconnect()">强制重连</button>
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="applySettings()">应用设置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
 
+
         window.onload = async function () {
+            //Load Settings
+            // 读取设置并应用
+            const savedFont = localStorage.getItem('terminalFont') || 'consolas';
+            const savedFontSize = localStorage.getItem('terminalFontSize') || '14';
+
+            // 设置下拉框和输入框的初始值
+            document.getElementById('fontSelect').value = savedFont;
+            document.getElementById('fontSizeSelect').value = savedFontSize;
+
+            // Modal
+            window.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 
             const SERVER_URL = "linkpty.codesocean.top:43143";
             // const SERVER_URL = "localhost:8000";
@@ -33,47 +103,74 @@
 
             let selectedTab = undefined;
 
+            // 历史连接码，最多保存5个
+            const historyKeys = JSON.parse(localStorage.getItem('historyKeys')) || [];
 
             const { value: key } = await Swal.fire({
-                title: "Please input key to connect",
-                input: "text",
-                inputLabel: "Terminal key given:",
-                inputValue: "",
-                showCancelButton: false,
-                confirmButtonColor: "#3085d6",
-                inputValidator: (value) => {
-                    if (!value) {
-                        return "You need to write something!";
+                title: "Please input code to link",
+                html: `
+                    <input style="width: 80%;" type="text" id="keyInput" class="swal2-input" placeholder="Please input key">
+                    <div class="history" style="margin-top: 10px;">
+                        <div class="d-flex justify-content-center align-items-center mb-1">
+                            <span style="margin-right: 10px;">Histories </span>
+                            ${historyKeys.map((k, index) => `
+                                    <button style="margin-right: 5px;" class="btn btn-secondary btn-sm history-key" onclick="document.getElementById('keyInput').value = '${k}';">${k}</button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `,
+                focusConfirm: false,
+                preConfirm: () => {
+                    const keyValue = document.getElementById('keyInput').value;
+                    if (!keyValue) {
+                        Swal.showValidationMessage('Please input key');
                     }
+                    return keyValue;
                 }
             });
-            console.log(key)
-            if (key == "" || !key) location.reload();
 
-            document.title = key + " - " + document.title
-            let socket = new WebSocket(`ws://${SERVER_URL}/dockerclient?key=${key}`);
-
-            socket.onopen = function (event) {
-                setInterval(() => {
-                    socket.send(JSON.stringify({
-                        "operation": "PING"
-                    }))
-                }, 60000)
+            if (key) {
+                // 如果输入的连接码有效，保存到历史中
+                if (!historyKeys.includes(key)) {
+                    historyKeys.unshift(key);
+                    if (historyKeys.length > 5) historyKeys.pop(); // 保持最多5个历史记录
+                    localStorage.setItem('historyKeys', JSON.stringify(historyKeys));
+                }
+                document.title = key + " - " + document.title;
+            } else {
+                location.reload();
             }
 
-            // 显示终端输出
-            socket.onmessage = function (event) {
-                let jsonData = JSON.parse(event.data);
-                if (jsonData.operation == "CREATE_TERMINAL_DONE") {
-                    handleCreateNewTabDone(jsonData.terminal_index)
-                } else if (jsonData.operation == "RECEIVE_SERVEROUTPUT") {
-                    for (let item of tabs) {
-                        if (item.tabIndex == jsonData.terminal_index) {
-                            item.term.write(jsonData.data);
+            function createWebsocket() {
+                return new Promise((resolve, reject) => {
+                    let socket = new WebSocket(`ws://${SERVER_URL}/dockerclient?key=${key}`);
+
+                    // 显示终端输出
+                    socket.onmessage = function (event) {
+                        let jsonData = JSON.parse(event.data);
+                        if (jsonData.operation == "CREATE_TERMINAL_DONE") {
+                            handleCreateNewTabDone(jsonData.terminal_index)
+                        } else if (jsonData.operation == "RECEIVE_SERVEROUTPUT") {
+                            for (let item of tabs) {
+                                if (item.tabIndex == jsonData.terminal_index) {
+                                    item.term.write(jsonData.data);
+                                }
+                            }
                         }
+                    };
+
+                    socket.onopen = function (event) {
+                        setInterval(() => {
+                            socket.send(JSON.stringify({
+                                "operation": "PING"
+                            }))
+                        }, 60000)
+                        resolve(socket);
                     }
-                }
-            };
+                });
+            }
+
+            let socket;
 
             // 首先检查状态
             setTimeout(() => {
@@ -83,15 +180,16 @@
                     redirect: 'follow'
                 })
                     .then(response => response.text())
-                    .then(function (result) {
+                    .then(async function (result) {
                         result = JSON.parse(result);
                         if (result.result == "offline") {
-                            alert("该主机已经离线，将加载历史记录。")
+                            commonUtil.message("该主机已经离线，将加载历史记录。", type="danger")
                             for (let terminal of result.terminals) {
                                 handleCreateNewTabDone(terminal.terminal_index, false)
                                 handleGetTerminalHistory(terminal.terminal_index)
                             }
                         } else if (result.result == "success") {
+                            socket = await createWebsocket();
                             if (result.terminals.length == 0) {
                                 handleCreateNewTab();
                             } else {
@@ -101,10 +199,10 @@
                                 }
                             }
                         } else {
-                            alert(result.msg);
+                            commonUtil.message(result.msg, type="warning");
                         }
                     })
-                    .catch(error => { console.log(error); alert("检查状态时出错") });
+                    .catch(error => { console.log(error); commonUtil.message("检查状态时出错", type="danger") });
             }, 500);
 
 
@@ -120,10 +218,10 @@
                     .then(result => {
                         result = JSON.parse(result);
                         if (result.result != "success") {
-                            alert(result.msg)
+                            commonUtil.message(result.msg)
                         }
                     })
-                    .catch(error => alert("创建新标签时出错"));
+                    .catch(error => commonUtil.message("创建新标签时出错", type="danger"));
             }
 
             function handleCreateNewTabDone(terminalIndex, isOnline = true) {
@@ -132,21 +230,28 @@
                 let terminalDom = document.createElement("div");
                 terminalDom.classList.add(".terminal");
                 let term = new Terminal({
-                    scrollback: 2147483647
+                    scrollback: 2147483647,
+                    fontFamily: 'consolas, monospace'
                 });
-                // 初始化FitAddon实例
-                let fitAddon = new FitAddon.FitAddon();
-                // 加载FitAddon
+                const fitAddon = new FitAddon.FitAddon();
                 term.loadAddon(fitAddon);
+                const searchAddon = new SearchAddon.SearchAddon();
+                const searchAddonBar = new SearchBarAddon.SearchBarAddon({searchAddon});
+                term.loadAddon(new WebLinksAddon.WebLinksAddon());
+                term.loadAddon(searchAddon);
+                term.loadAddon(searchAddonBar);
                 tabs.push(
                     {
                         name: "新标签",
                         tabIndex: terminalIndex,
                         terminalDom,
                         term,
-                        isOnline
+                        isOnline,
+                        searchAddonBar,
+                        fitAddon
                     }
                 )
+                window.applySettings();
                 terminalsDom.appendChild(terminalDom);
                 term.open(terminalDom);
                 fitAddon.fit();
@@ -180,7 +285,7 @@
                     .then(result => {
                         result = JSON.parse(result);
                         if (result.result != "success") {
-                            alert(result.msg)
+                            commonUtil.message(result.msg)
                         } else {
                             for (let i = 0; i <= tabs.length; i++) {
                                 let item = tabs[i];
@@ -196,7 +301,7 @@
                             drawTabs();
                         }
                     })
-                    .catch(error => alert("连接失败"));
+                    .catch(error => commonUtil.message("连接失败", type="danger"));
             }
 
             function drawTabs() {
@@ -210,7 +315,7 @@
                     tabDom.classList.add("tab");
                     if (item == selectedTab) tabDom.classList.add("selected");
                     tabDom.innerHTML = `
-                        <span class="name"> <div class="status ${item.isOnline ? 'online' : 'offline'}"></div> #${item.tabIndex} </span> <button>x</button>
+                        <span class="name"> <div class="status ${item.isOnline ? 'online' : 'offline'}"></div> #${item.tabIndex} </span> <button>×</button>
                     `
                     tabsDom.appendChild(tabDom);
                     let closeBtnDom = tabDom.querySelector("button");
@@ -235,10 +340,12 @@
                 newTabButtonDom.classList.add("tab")
                 newTabButtonDom.classList.add("new")
                 tabsDom.appendChild(newTabButtonDom);
+                console.log(selectedTab);
+                if(selectedTab != undefined) selectedTab.searchAddonBar.hidden();
             }
 
             function handleGetTerminalHistory(terminalIndex) {
-                tabs[terminalIndex].term.write("\r\nHistory records are stilling being loaded, please wait...\r\n")
+                tabs[terminalIndex].term.write("\r\nHistory records are stilling being loaded(and may take several minutes when large), please wait...\r\n")
                 fetch(`http://${SERVER_URL}/get_history?key=${key}&terminal_index=${terminalIndex}`, {
                     method: 'GET',
                     headers: new Headers(),
@@ -248,7 +355,7 @@
                     .then(result => {
                         result = JSON.parse(result);
                         if (result.result != "success") {
-                            alert(result.msg)
+                            commonUtil.message(result.msg)
                         } else {
                             for (let item of tabs) {
                                 if (item.tabIndex == terminalIndex) {
@@ -261,7 +368,43 @@
                             }
                         }
                     })
-                    .catch(error => { console.log(error); alert("获取历史数据时出错") });
+                    .catch(error => { console.log(error); commonUtil.message("获取历史数据时出错", type="danger") });
+            }
+
+
+            window.showSearchBar = () => {
+                selectedTab.searchAddonBar.show();
+            }
+
+
+            window.applySettings = () => {
+                const font = document.getElementById('fontSelect').value;
+                const fontSize = document.getElementById('fontSizeSelect').value;
+
+                // 保存设置到 localStorage
+                localStorage.setItem('terminalFont', font);
+                localStorage.setItem('terminalFontSize', fontSize);
+
+                for (let tab of tabs) {
+                    tab.term.options.fontFamily = font;
+                    tab.term.options.fontSize = parseInt(fontSize, 10);
+                    tab.term.write(`\x1b[10;${fontSize}m`); // 更新字号
+                    tab.fitAddon.fit();
+                }
+                window.settingsModal.hide();
+            }
+
+            window.stopTask = () => {
+                // 在此处添加停止任务的逻辑
+                commonUtil.message('任务已停止！');
+            }
+
+            window.forceReconnect = () => {
+                // 在此处添加强制重连的逻辑
+                if (socket) {
+                    socket.close(); // 关闭当前连接
+                }
+                createWebsocket(); // 重新建立连接
             }
 
         }
@@ -274,23 +417,38 @@
         flex-direction: column;
         margin: 0;
 
-        .tabs {
-            display: flex;
+        .tabWrapper{
             width: 100%;
+            height: 35px;
+            display: flex;
             background-color: #F7F7F7;
             border-bottom: 2px solid #E6E6E6;
             box-sizing: border-box;
+            .btn{
+                cursor: pointer;
+                transition: all .3s;
+            }
+            .btn:hover{
+                filter: brightness(0.9);
+                background-color: #e2e2e2;
+            }
+        }
+
+        .tabs {
+            display: flex;
+            width: 100%;
             height: 35px;
 
             .tab {
                 height: 100%;
                 display: flex;
-                width: 100px;
+                width: 150px;
                 padding: 0 20px;
                 justify-content: space-between;
                 align-items: center;
                 cursor: pointer;
                 box-sizing: border-box;
+                transition: all .3s;
 
                 .name {
                     display: flex;
@@ -313,9 +471,23 @@
                 }
 
                 button {
-                    border-radius: 100%;
+                    border-radius: 5px;
                     border: 0;
-
+                    width: 20px;
+                    height: 20px;
+                    margin: 0;
+                    padding: 0;
+                    line-height: 20px;
+                    font-size: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all .3s;
+                    background-color: #cccccc00;
+                }
+                
+                button:hover{
+                    background-color: #ccccccff;
                 }
             }
 
@@ -333,6 +505,7 @@
                 border-left: 1px solid #D2D2D2;
                 border-right: 1px solid #D2D2D2;
                 border-top: 1px solid #D2D2D2;
+                border-radius: 5px 5px 0 0;
             }
         }
 

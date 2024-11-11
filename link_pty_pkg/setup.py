@@ -2,11 +2,12 @@ from setuptools import setup, find_packages
 
 setup(
     name="link-pty",
-    version="0.3.0",
+    version="0.5.0",
     packages=find_packages(),
     install_requires=[
         "websockets",
         "requests",
+        "psutil" 
     ],
     entry_points={
         'console_scripts': [

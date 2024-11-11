@@ -7,10 +7,18 @@ import subprocess
 import websockets
 import requests
 import argparse
+import signal
+import psutil  # 需要安装此库
+
+os.environ["LANG"] = "en_US.UTF-8"
+os.environ["LC_ALL"] = "en_US.UTF-8"
+os.environ["TERM"] = "xterm-256color"
 
 class TerminalManager:
     current_key = None  # 类变量，用于保存 key
     terminals = []
+    ws = None
+    buf = []
 
     def __init__(self, base_url):
         self.BASE_SERVER_URL = base_url
@@ -19,31 +27,43 @@ class TerminalManager:
         else:
             self.key = None  # 初次连接时 key 为 None
 
-    async def read_and_forward_output(self, ws, master_fd: int, terminal_index: int):
+    async def read_and_save_buf(self, master_fd: int, terminal_index: int):
         """持续读取伪终端的输出并通过 WebSocket 转发给客户端"""
         try:
-            while ws.open:
+            while True:
                 await asyncio.sleep(0.1)  # 非阻塞等待
                 rlist, _, _ = select.select([master_fd], [], [], 0.1)
                 if master_fd in rlist:
                     output = os.read(master_fd, 2048).decode("utf-8", errors="ignore")
-                    await ws.send(json.dumps({"operation": "RECEIVE_SERVEROUTPUT", "terminal_index": terminal_index, "data": output}))
+                    print(output)
+                    self.buf.append((terminal_index, output))
         except Exception as e:
             print(f"Error while reading pty output: {e}")
     
-    async def ping(self, ws):
-        try:
-            while ws.open:
+    async def forward_output(self):
+        while True:
+            try:
+                await asyncio.sleep(0.1)  # 非阻塞等待
+                if len(self.buf) > 0 and self.ws.open:
+                    terminal_index : int = self.buf[0][0]
+                    outputs = list([item[1] for item in self.buf if item[0] == terminal_index])
+                    self.buf = list(filter(lambda item: item[0] != terminal_index, self.buf))
+                    await self.ws.send(json.dumps({"operation": "RECEIVE_SERVEROUTPUT", "terminal_index": terminal_index, "data": ''.join(outputs)}))
+            except Exception as e:
+                print(f"Error while reading pty output: {e}")
+    
+    async def ping(self):
+        while True:
+            try:
                 await asyncio.sleep(60)  # 非阻塞等待
-                await ws.send(json.dumps({"operation": "PING"}))
-        except websockets.exceptions.ConnectionClosed:
-            print("WebSocket connection closed. Stopping ping.")
-        except Exception as e:
-            print(f"Ping error: {e}")
+                if self.ws.open:
+                    await self.ws.send(json.dumps({"operation": "PING"}))
+            except Exception as e:
+                print(f"Ping error: {e}")
 
     async def on_message(self, ws):
-        async for message in ws:
-            try:
+        try:
+            async for message in ws:
                 data_json = json.loads(message)
                 operation = data_json["operation"]
                 if operation == "ASSIGN_KEY":
@@ -61,7 +81,7 @@ class TerminalManager:
                     requests.get(f"http://{self.BASE_SERVER_URL}/create_terminal_done?key={self.key}&terminal_index={len(TerminalManager.terminals) - 1}")
 
                     # 使用 asyncio 创建任务
-                    asyncio.create_task(self.read_and_forward_output(ws, master_fd, len(TerminalManager.terminals) - 1))
+                    asyncio.ensure_future(self.read_and_save_buf(master_fd, len(TerminalManager.terminals) - 1))
                     print(f"Created new pseudo terminal #{len(TerminalManager.terminals) - 1}")
                 elif operation == "TERMINATE_TERMINAL":
                     terminal = TerminalManager.terminals[data_json["terminal_index"]]
@@ -69,39 +89,47 @@ class TerminalManager:
                     os.close(terminal[1])
                     os.close(terminal[2])
                 elif operation == "RECEIVE_USERINPUT":
-                    print(data_json)
                     terminal = TerminalManager.terminals[data_json["terminal_index"]]
-                    os.write(terminal[1], data_json["data"].encode('utf-8'))
-            except Exception as e:
-                print(f"Error handling message: {e}")
+                    user_input = data_json["data"]
+                    
+                    # 检查是否是 Ctrl+C (ASCII 3 对应 Ctrl+C)
+                    if user_input == '\x03':
+                        # 获取伪终端的子进程
+                        process = psutil.Process(terminal[0].pid)
+                        children = process.children(recursive=True)  # 获取所有子进程
+                        
+                        if children:
+                            # 发送 SIGINT 给第一个子进程
+                            os.kill(children[0].pid, signal.SIGINT)
+                        else:
+                            print("No child processes to terminate.")
+                    else:
+                        os.write(terminal[1], user_input.encode('utf-8'))
+        except Exception as e:
+            print(f"Error handling message: {e}")
 
     async def main(self):
-        for i in range(0, 10):
+        asyncio.ensure_future(self.forward_output())
+        asyncio.ensure_future(self.ping())
+        while True:
+            await asyncio.sleep(1)
             try:
                 websocket_url = f"ws://{self.BASE_SERVER_URL}/dockerserver" + (f"?key={TerminalManager.current_key}" if TerminalManager.current_key is not None else "")
                 if TerminalManager.current_key is not None:
-                        websocket_url += "&histories="
-                        for index, terminal in enumerate(TerminalManager.terminals):
-                            if terminal[0].poll() is None: # 说明进程还在执行中
-                                websocket_url += "1"
-                            else:
-                                websocket_url += "0"
-                print(f"Connecting to {websocket_url} ...")
-                async with websockets.connect(websocket_url) as ws:
+                    websocket_url += "&histories="
                     for index, terminal in enumerate(TerminalManager.terminals):
                         if terminal[0].poll() is None: # 说明进程还在执行中
-                            asyncio.create_task(self.read_and_forward_output(ws, terminal[1], index))
-                            print(f"Relinked pseudo terminal #{index}")
+                            websocket_url += "1"
                         else:
                             websocket_url += "0"
-                    asyncio.create_task(self.ping(ws))
+                print(f"Connecting to {websocket_url} ...")
+                async with websockets.connect(websocket_url) as ws:
+                    self.ws = ws
                     await self.on_message(ws)
             except websockets.exceptions.ConnectionClosedError as e:
                 print(f"Connection closed: {e}. Reconnecting in 5 seconds...")
-                await asyncio.sleep(5)  # 等待 5 秒后重新连接
             except Exception as e:
                 print(f"Unexpected error: {e}. Reconnecting in 5 seconds...")
-                await asyncio.sleep(5)
 
 def run_terminal_manager():
     parser = argparse.ArgumentParser(description='Run the terminal manager.')

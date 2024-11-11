@@ -7,6 +7,11 @@ import os
 from datetime import datetime
 import re
 from fastapi.staticfiles import StaticFiles
+import asyncio
+
+os.environ["LANG"] = "en_US.UTF-8"
+os.environ["LC_ALL"] = "en_US.UTF-8"
+os.environ["TERM"] = "xterm-256color"
 
 app = FastAPI()
 
@@ -20,6 +25,7 @@ app.add_middleware(
 )
 
 servers = dict()
+
 
 class Server:
     def __init__(self, websocket: WebSocket):
@@ -37,12 +43,10 @@ class Terminal:
         if is_online:
             if not os.path.exists('./data'):
                 os.makedirs('./data')
-            with open(self.log_file, 'a') as f:
-                f.write(f"Terminal {terminal_index} Log Created at {datetime.now()}\n")
 
     # 记录 SERVEROUTPUT
     def log_server_output(self, output):
-        with open(self.log_file, 'a') as f:
+        with open(self.log_file, 'a', encoding="utf8") as f:
             f.write(output)
 
 def generate_key(key_length=8):
@@ -62,13 +66,14 @@ async def dockerserver(websocket: WebSocket):
         key = generate_key()
         servers[key] = Server(websocket)
     else:
+        # 从服务端提供的信息中恢复
         servers[key] = Server(websocket)
         # 恢复所有的terminal
         terminals = websocket.query_params.get("histories")
         if terminals is None:
             terminals = []
         for index, is_online in enumerate(terminals):
-            print(is_online)
+            # print(is_online)
             servers[key].terminals.append(Terminal(key, index, True if is_online == "1" else False))
 
     await websocket.accept()
@@ -86,15 +91,18 @@ async def dockerserver(websocket: WebSocket):
                 terminal: Terminal = server.terminals[terminal_index]
                 terminal.log_server_output(data_json["data"])  # 记录SERVEROUTPUT
                 client: WebSocket = server.client
-                await client.send_text(json.dumps(data_json))
+                if client is not None:
+                    await client.send_text(json.dumps(data_json))
             elif operation == "PING":
                 server: Server = servers[key]
                 await server.websocket.send_text(json.dumps({"operation": "PONG"}))
         except WebSocketDisconnect:
             print(f"服务端 {key} 断开连接")
+            await websocket.close()
             servers.pop(key)
             break
         except Exception as e:
+            print(e)
             await websocket.close()
             servers.pop(key)
             break
@@ -171,26 +179,17 @@ async def terminate_terminal(key: str, terminal_index: int):
 # 获取某个 Terminal 的历史记录
 @app.get("/get_history")
 async def get_history(key: str, terminal_index: int):
-    if servers.get(key) is not None:
-        try:
-            server: Server = servers[key]
-            terminal: Terminal = server.terminals[terminal_index]
-            log_file = terminal.log_file
-            with open(log_file, 'r') as file:
-                content = file.readlines()
-                content = [line.strip() for line in content]
-                return {"result": "success", "history": content}
-        except Exception as e:
-            return {"result": "fail", "msg": str(e)}
-    else:
-        try:
-            log_file = f"./data/terminal_{key}_{terminal_index}.txt"
-            with open(log_file, 'r') as file:
-                content = file.readlines()
-                content = [line.strip() for line in content]
-                return {"result": "success", "history": content}
-        except Exception as e:
-            return {"result": "fail", "msg": str(e)}
+    try:
+        log_file = f"./data/terminal_{key}_{terminal_index}.txt"
+        if not os.path.exists(log_file):
+            with open(log_file, 'a', encoding="utf8") as f:
+                f.write("\n")
+        with open(log_file, 'r', encoding="utf8") as file:
+            content = file.readlines()
+            content = [line.strip() for line in content[-500:]]
+            return {"result": "success", "history": content}
+    except Exception as e:
+        return {"result": "fail", "msg": str(e)}
     
 # 获取某个 Key 对应的服务状态
 @app.get("/get_status")
