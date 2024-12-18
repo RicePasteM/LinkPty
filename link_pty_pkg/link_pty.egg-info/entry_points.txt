@@ -1,2 +1,3 @@
 [console_scripts]
 link-pty = link_pty.terminal_manager:run_terminal_manager
+

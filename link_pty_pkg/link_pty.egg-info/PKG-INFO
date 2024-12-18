@@ -1,18 +1,17 @@
 Metadata-Version: 2.1
 Name: link-pty
-Version: 0.5.0
+Version: 0.6.0
 Summary: A package to manage pseudo terminals via WebSocket
 Home-page: https://github.com/ricepastem/link_pty
 Author: ricepastem
+License: UNKNOWN
+Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: websockets
-Requires-Dist: requests
-Requires-Dist: psutil
 
 # link_pty
 
@@ -34,3 +33,4 @@ link-pty --base-url "your_base_url_here"
 ```
 
 If no base URL is provided, it defaults to linkpty.codesocean.top:43143.
+

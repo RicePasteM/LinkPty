@@ -27,6 +27,13 @@ class TerminalManager:
         else:
             self.key = None  # 初次连接时 key 为 None
 
+    def is_ws_connected(self):
+        """检查 WebSocket 连接状态"""
+        try:
+            return self.ws.open if hasattr(self.ws, 'open') else True
+        except:
+            return False
+
     async def read_and_save_buf(self, master_fd: int, terminal_index: int):
         """持续读取伪终端的输出并通过 WebSocket 转发给客户端"""
         try:
@@ -44,11 +51,13 @@ class TerminalManager:
         while True:
             try:
                 await asyncio.sleep(0.1)  # 非阻塞等待
-                if len(self.buf) > 0 and self.ws.open:
+                if len(self.buf) > 0 and self.is_ws_connected():
                     terminal_index : int = self.buf[0][0]
                     outputs = list([item[1] for item in self.buf if item[0] == terminal_index])
                     self.buf = list(filter(lambda item: item[0] != terminal_index, self.buf))
                     await self.ws.send(json.dumps({"operation": "RECEIVE_SERVEROUTPUT", "terminal_index": terminal_index, "data": ''.join(outputs)}))
+            except websockets.exceptions.ConnectionClosed:
+                break
             except Exception as e:
                 print(f"Error while reading pty output: {e}")
     
@@ -56,8 +65,10 @@ class TerminalManager:
         while True:
             try:
                 await asyncio.sleep(60)  # 非阻塞等待
-                if self.ws.open:
+                if self.is_ws_connected():
                     await self.ws.send(json.dumps({"operation": "PING"}))
+            except websockets.exceptions.ConnectionClosed:
+                break
             except Exception as e:
                 print(f"Ping error: {e}")
 
