@@ -8,7 +8,7 @@ import websockets
 import requests
 import argparse
 import signal
-import psutil  # 需要安装此库
+import psutil
 
 os.environ["LANG"] = "en_US.UTF-8"
 os.environ["LC_ALL"] = "en_US.UTF-8"
@@ -38,7 +38,7 @@ class TerminalManager:
         """持续读取伪终端的输出并通过 WebSocket 转发给客户端"""
         try:
             while True:
-                await asyncio.sleep(0.1)  # 非阻塞等待
+                await asyncio.sleep(0.05)  # 非阻塞等待
                 rlist, _, _ = select.select([master_fd], [], [], 0.1)
                 if master_fd in rlist:
                     output = os.read(master_fd, 2048).decode("utf-8", errors="ignore")
@@ -50,7 +50,7 @@ class TerminalManager:
     async def forward_output(self):
         while True:
             try:
-                await asyncio.sleep(0.1)  # 非阻塞等待
+                await asyncio.sleep(0.05)  # 非阻塞等待
                 if len(self.buf) > 0 and self.is_ws_connected():
                     terminal_index : int = self.buf[0][0]
                     outputs = list([item[1] for item in self.buf if item[0] == terminal_index])
@@ -116,8 +116,33 @@ class TerminalManager:
                             print("No child processes to terminate.")
                     else:
                         os.write(terminal[1], user_input.encode('utf-8'))
+                elif operation == "RESET_TERMINAL":
+                    await self.reset_terminal(data_json["terminal_index"])
         except Exception as e:
             print(f"Error handling message: {e}")
+
+    async def reset_terminal(self, terminal_index: int):
+        if terminal_index >= len(self.terminals):
+            return
+        old_terminal = self.terminals[terminal_index]
+        try:
+            old_terminal[0].terminate()
+            os.close(old_terminal[1])
+            os.close(old_terminal[2])
+            master_fd, slave_fd = pty.openpty()
+            process = subprocess.Popen(
+                ["/bin/bash"],
+                stdin=slave_fd,
+                stdout=slave_fd,
+                stderr=slave_fd,
+                close_fds=True
+            )
+            self.terminals[terminal_index] = (process, master_fd, slave_fd)
+            asyncio.ensure_future(self.read_and_save_buf(master_fd, terminal_index))
+            requests.get(f"http://{self.BASE_SERVER_URL}/create_terminal_done?key={self.key}&terminal_index={terminal_index}")
+            print(f"Reset terminal #{terminal_index} successfully")
+        except Exception as e:
+            print(f"Error resetting terminal: {e}")
 
     async def main(self):
         asyncio.ensure_future(self.forward_output())

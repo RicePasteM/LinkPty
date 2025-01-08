@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: link-pty
-Version: 0.6.0
+Version: 0.7.0
 Summary: A package to manage pseudo terminals via WebSocket
 Home-page: https://github.com/ricepastem/link_pty
 Author: ricepastem

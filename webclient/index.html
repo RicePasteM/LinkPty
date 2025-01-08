@@ -13,19 +13,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="./jquery.js"></script>
     <script src="./commonUtils.js"></script>
+    <link href="https://db.onlinewebfonts.com/c/e75623779ec6c14a7956c731401b6160?family=DatCub" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>LinkPty - 基于 WebSocket 服务器的伪终端</title>
-</head>
+</head>CX
 
 <body>
 
     <div class="tabWrapper">
         <div class="tabs">
             <div class="tab" style="width: auto" onclick="window.open('https:\/\/github.com/RicePasteM/LinkPty')">
-                <span class="name" style="display: flex; align-items:center;">
-                    <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>
+                <span class="name" style="display: flex; align-items:center; font-family: DatCub;">
+                    <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px; "> LinkPty </span>
             </div>
         </div>
         <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;" onclick="window.showSearchBar()">
@@ -68,11 +69,11 @@
                     <!-- <div class="form-group">
                         <div>结束任务 </div>
                         <button type="button" id="stopTask" class="btn btn-danger" onclick="stopTask()">停止任务</button>
-                    </div>
-                    <div class="form-group">
-                        <div>强制重连 </div>
-                        <button type="button" id="forceReconnect" class="btn btn-warning" onclick="forceReconnect()">强制重连</button>
                     </div> -->
+                    <div class="form-group">
+                        <div>强制重置当前终端（仅当出现问题时使用）</div>
+                        <button type="button" id="forceReconnect" class="btn btn-warning" onclick="forceReconnect()">立即重置</button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="applySettings()">应用设置</button>
@@ -88,7 +89,7 @@
             //Load Settings
             // 读取设置并应用
             const savedFont = localStorage.getItem('terminalFont') || 'consolas';
-            const savedFontSize = localStorage.getItem('terminalFontSize') || '14';
+            const savedFontSize = localStorage.getItem('terminalFontSize') || '16';
 
             // 设置下拉框和输入框的初始值
             document.getElementById('fontSelect').value = savedFont;
@@ -156,6 +157,11 @@
                                     item.term.write(jsonData.data);
                                 }
                             }
+                        } else if (jsonData.operation == "RESET_TERMINAL_DONE"){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Reset Successfully'
+                            });
                         }
                     };
 
@@ -307,8 +313,8 @@
             function drawTabs() {
                 let tabsDom = document.querySelector(".tabs");
                 tabsDom.innerHTML = `<div class="tab" style="width: auto" onclick="window.open('https:\/\/github.com/RicePasteM/LinkPty')">
-                    <span class="name" style="display: flex; align-items:center;">
-                        <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px;"> LinkPty </span>
+                    <span class="name" style="display: flex; align-items:center; font-family: DatCub;">
+                        <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px; "> LinkPty </span>
                 </div>`;
                 for (let item of tabs) {
                     let tabDom = document.createElement("div");
@@ -399,12 +405,32 @@
                 commonUtil.message('任务已停止！');
             }
 
-            window.forceReconnect = () => {
-                // 在此处添加强制重连的逻辑
-                if (socket) {
-                    socket.close(); // 关闭当前连接
+            window.forceReconnect = async () => {
+                if (!selectedTab) return;
+
+                console.log(selectedTab)
+                
+                try {
+                    const response = await fetch(`http://${SERVER_URL}/reset_terminal?key=${key}&terminal_index=${selectedTab.tabIndex}`);
+                    const result = await response.json();
+                    
+                    if (result.result === "success") {
+                        console.log("Terminal reset successfully");
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Reset Failed',
+                            text: result.msg || 'Failed to reset terminal'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error resetting terminal:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Reset Failed',
+                        text: 'Failed to connect to server'
+                    });
                 }
-                createWebsocket(); // 重新建立连接
             }
 
         }
@@ -412,6 +438,7 @@
 </body>
 
 <style>
+
     body {
         display: flex;
         flex-direction: column;
@@ -453,6 +480,7 @@
                 .name {
                     display: flex;
                     align-items: center;
+                    font-size: 18px;
 
                     .status {
                         width: 10px;

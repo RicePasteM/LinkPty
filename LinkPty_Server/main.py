@@ -158,6 +158,12 @@ async def create_terminal(key: str):
 async def create_terminal_done(key: str, terminal_index: int):
     if servers.get(key) is not None:
         server: Server = servers[key]
+        for terminal in server.terminals:
+            terminal: Terminal = terminal
+            if terminal.terminal_index == terminal_index:
+                client: WebSocket = server.client
+                await client.send_text(json.dumps({"operation": "RESET_TERMINAL_DONE", "terminal_index": terminal_index}))
+                return {"result": "reset", "msg": "已重置终端"}
         server.terminals.append(Terminal(key, terminal_index))
         client: WebSocket = server.client
         await client.send_text(json.dumps({"operation": "CREATE_TERMINAL_DONE", "terminal_index": terminal_index}))
@@ -186,7 +192,7 @@ async def get_history(key: str, terminal_index: int):
                 f.write("\n")
         with open(log_file, 'r', encoding="utf8") as file:
             content = file.readlines()
-            content = [line.strip() for line in content[-500:]]
+            content = [line.strip() for line in content[-2000:]]
             return {"result": "success", "history": content}
     except Exception as e:
         return {"result": "fail", "msg": str(e)}
@@ -228,3 +234,15 @@ async def get_status(key: str):
                         "is_online": False
                     })
         return {"result": "offline", "terminals": terminals}
+
+@app.get("/reset_terminal")
+async def reset_terminal(key: str, terminal_index: int):
+    if servers.get(key) is not None:
+        server: Server = servers[key]
+        await server.websocket.send_text(json.dumps({
+            "operation": "RESET_TERMINAL", 
+            "terminal_index": terminal_index
+        }))
+        return {"result": "success"}
+    else:
+        return {"result": "fail", "msg": "主机不存在"}
