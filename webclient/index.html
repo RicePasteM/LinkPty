@@ -10,7 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-search@latest/lib/xterm-addon-search.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@latest/lib/xterm-addon-web-links.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-search-bar@latest/lib/xterm-addon-search-bar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script src="./jquery.js"></script>
     <script src="./commonUtils.js"></script>
     <link href="https://db.onlinewebfonts.com/c/e75623779ec6c14a7956c731401b6160?family=DatCub" rel="stylesheet">
@@ -18,7 +20,7 @@
     <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>LinkPty - 基于 WebSocket 服务器的伪终端</title>
-</head>CX
+</head>
 
 <body>
 
@@ -29,15 +31,22 @@
                     <img src="./favicon.ico" alt="" style="height: 20px; margin: 0 5px; "> LinkPty </span>
             </div>
         </div>
-        <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;" onclick="window.showSearchBar()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="transform: scale(1)">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;"
+            onclick="window.showSearchBar()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16" style="transform: scale(1)">
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
             </svg>
         </div>
-        <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;" onclick="window.settingsModal.show()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+        <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;"
+            onclick="window.settingsModal.show()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                <path
+                    d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
             </svg>
         </div>
     </div>
@@ -72,7 +81,13 @@
                     </div> -->
                     <div class="form-group">
                         <div>强制重置当前终端（仅当出现问题时使用）</div>
-                        <button type="button" id="forceReconnect" class="btn btn-warning" onclick="forceReconnect()">立即重置</button>
+                        <button type="button" id="forceReconnect" class="btn btn-warning"
+                            onclick="forceReconnect()">立即重置</button>
+                    </div>
+                    <div class="form-group">
+                        <div>下载当前终端日志</div>
+                        <button type="button" id="downloadLog" class="btn btn-info"
+                            onclick="downloadTerminalLog()">下载日志</button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -157,7 +172,7 @@
                                     item.term.write(jsonData.data);
                                 }
                             }
-                        } else if (jsonData.operation == "RESET_TERMINAL_DONE"){
+                        } else if (jsonData.operation == "RESET_TERMINAL_DONE") {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Reset Successfully'
@@ -189,7 +204,7 @@
                     .then(async function (result) {
                         result = JSON.parse(result);
                         if (result.result == "offline") {
-                            commonUtil.message("该主机已经离线，将加载历史记录。", type="danger")
+                            commonUtil.message("该主机已经离线，将加载历史记录。", type = "danger")
                             for (let terminal of result.terminals) {
                                 handleCreateNewTabDone(terminal.terminal_index, false)
                                 handleGetTerminalHistory(terminal.terminal_index)
@@ -205,10 +220,10 @@
                                 }
                             }
                         } else {
-                            commonUtil.message(result.msg, type="warning");
+                            commonUtil.message(result.msg, type = "warning");
                         }
                     })
-                    .catch(error => { console.log(error); commonUtil.message("检查状态时出错", type="danger") });
+                    .catch(error => { console.log(error); commonUtil.message("检查状态时出错", type = "danger") });
             }, 500);
 
 
@@ -227,7 +242,7 @@
                             commonUtil.message(result.msg)
                         }
                     })
-                    .catch(error => commonUtil.message("创建新标签时出错", type="danger"));
+                    .catch(error => commonUtil.message("创建新标签时出错", type = "danger"));
             }
 
             function handleCreateNewTabDone(terminalIndex, isOnline = true) {
@@ -242,7 +257,7 @@
                 const fitAddon = new FitAddon.FitAddon();
                 term.loadAddon(fitAddon);
                 const searchAddon = new SearchAddon.SearchAddon();
-                const searchAddonBar = new SearchBarAddon.SearchBarAddon({searchAddon});
+                const searchAddonBar = new SearchBarAddon.SearchBarAddon({ searchAddon });
                 term.loadAddon(new WebLinksAddon.WebLinksAddon());
                 term.loadAddon(searchAddon);
                 term.loadAddon(searchAddonBar);
@@ -307,7 +322,7 @@
                             drawTabs();
                         }
                     })
-                    .catch(error => commonUtil.message("连接失败", type="danger"));
+                    .catch(error => commonUtil.message("连接失败", type = "danger"));
             }
 
             function drawTabs() {
@@ -347,7 +362,7 @@
                 newTabButtonDom.classList.add("new")
                 tabsDom.appendChild(newTabButtonDom);
                 console.log(selectedTab);
-                if(selectedTab != undefined) selectedTab.searchAddonBar.hidden();
+                if (selectedTab != undefined) selectedTab.searchAddonBar.hidden();
             }
 
             function handleGetTerminalHistory(terminalIndex) {
@@ -374,7 +389,7 @@
                             }
                         }
                     })
-                    .catch(error => { console.log(error); commonUtil.message("获取历史数据时出错", type="danger") });
+                    .catch(error => { console.log(error); commonUtil.message("获取历史数据时出错", type = "danger") });
             }
 
 
@@ -409,11 +424,11 @@
                 if (!selectedTab) return;
 
                 console.log(selectedTab)
-                
+
                 try {
                     const response = await fetch(`http://${SERVER_URL}/reset_terminal?key=${key}&terminal_index=${selectedTab.tabIndex}`);
                     const result = await response.json();
-                    
+
                     if (result.result === "success") {
                         console.log("Terminal reset successfully");
                     } else {
@@ -433,29 +448,80 @@
                 }
             }
 
+            window.downloadTerminalLog = async () => {
+                if (!selectedTab) return;
+
+                try {
+                    commonUtil.message("已经开始下载（速度较慢）请耐心等待。");
+                    const response = await fetch(`http://${SERVER_URL}/download_terminal_log?key=${key}&terminal_index=${selectedTab.tabIndex}`);
+                    const result = await response.json();
+
+                    if (result.result === "success") {
+                        // 创建当前时间戳
+                        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                        const filename = `terminal_${key}_${selectedTab.tabIndex}_${timestamp}.log`;
+
+                        // 创建 Blob 对象
+                        const blob = new Blob([result.content], { type: 'text/plain' });
+
+                        // 创建下载链接并触发下载
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+
+                        // 清理
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Download Success',
+                            text: 'Terminal log has been downloaded'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Download Failed',
+                            text: result.msg || 'Failed to download terminal log'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error downloading terminal log:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Download Failed',
+                        text: 'Failed to connect to server'
+                    });
+                }
+            };
+
         }
     </script>
 </body>
 
 <style>
-
     body {
         display: flex;
         flex-direction: column;
         margin: 0;
 
-        .tabWrapper{
+        .tabWrapper {
             width: 100%;
             height: 35px;
             display: flex;
             background-color: #F7F7F7;
             border-bottom: 2px solid #E6E6E6;
             box-sizing: border-box;
-            .btn{
+
+            .btn {
                 cursor: pointer;
                 transition: all .3s;
             }
-            .btn:hover{
+
+            .btn:hover {
                 filter: brightness(0.9);
                 background-color: #e2e2e2;
             }
@@ -513,8 +579,8 @@
                     transition: all .3s;
                     background-color: #cccccc00;
                 }
-                
-                button:hover{
+
+                button:hover {
                     background-color: #ccccccff;
                 }
             }
