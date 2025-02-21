@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@xterm/addon-search": "^0.15.0",
     "bootstrap": "^5.3.3",
     "core-js": "^3.8.3",
     "sweetalert2": "^11.16.1",
@@ -19,6 +20,7 @@
     "xterm-addon-web-links": "^0.9.0"
   },
   "devDependencies": {
+    "@vicons/ionicons5": "^0.13.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
