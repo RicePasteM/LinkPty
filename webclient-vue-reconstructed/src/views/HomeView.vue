@@ -5,16 +5,26 @@
         <span class="name" style="display: flex; align-items:center; font-family: DatCub;">
           <img src="@/assets/logo.png" alt="" style="height: 18px; margin: 0 8px; "> LinkPty </span>
       </div>
-      <div class="tab" v-for="tab in tabs" :class="{ 'selected': tab == selectedTab }" @click="selectedTab = tab">
-        <span class="name">
-          <div :class="`status ${tab.isOnline ? 'online' : 'offline'}`"></div> #{{ tab.tabIndex }}
-        </span>
-        <button @click="handleCloseTerminal(tab.tabIndex)" >
-          <n-icon size="14">
-            <Close />
-          </n-icon>
-        </button>
-      </div>
+      <VueDraggable style="display: flex" v-model="tabs" target=".sort-target" :animation="150" filter=".undraggable">
+        <TransitionGroup
+            type="transition"
+            tag="div"
+            name="fade"
+            class="sort-target"
+            style="display: flex;"
+          >
+          <div class="tab" v-for="tab in tabs" :class="{ 'selected': tab == selectedTab, 'undraggable': tab != selectedTab }" @click="selectedTab = tab" :key="tab.tabIndex">
+            <span class="name">
+              <div :class="`status ${tab.isOnline ? 'online' : 'offline'}`"></div> #{{ tab.tabIndex }}
+            </span>
+            <button @click="handleCloseTerminal(tab.tabIndex)">
+              <n-icon size="14">
+                <Close />
+              </n-icon>
+            </button>
+          </div>
+        </TransitionGroup>
+      </VueDraggable>
     </div>
     <div class="btn" style="width: 40px; display: flex; justify-content: center; align-items: center;"
       @click="showSearchBar">
@@ -43,7 +53,7 @@
   <!-- Settings Modal -->
   <n-modal v-model:show="showSettingsModal" preset="card" title="终端设置" style="width: 500px;" :bordered="false">
     <n-form-item label="终端字体" path="font">
-      <n-select v-model:value="settingsForm.font" :options="fontOptions" placeholder="选择字体" filterable tag/>
+      <n-select v-model:value="settingsForm.font" :options="fontOptions" placeholder="选择字体" filterable tag />
     </n-form-item>
 
     <n-form-item label="终端字号" path="fontSize">
@@ -65,7 +75,7 @@
         </n-button>
       </n-space>
 
-      <div style="display: flex; justify-content: center;">
+      <div style="display: flex; justify-content: center; margin-top: 15px;">
         <n-button type="primary" @click="applySettings">
           应用设置
         </n-button>
@@ -76,7 +86,7 @@
   <div class="search-container" v-show="showSearch" ref="searchContainer">
     <div class="search-box">
       <n-input v-model:value="searchText" placeholder="输入搜索内容" @keyup.enter="searchNext" ref="searchInput"
-        class="search-input"/>
+        class="search-input" />
       <div class="search-controls">
         <n-button size="small" @click="searchPrev">
           <template #icon>
@@ -111,6 +121,7 @@
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick, computed, watch } from 'vue'
 import { useMessage, useModal } from 'naive-ui'
 import { SearchOutline, SettingsOutline, ChevronUp, ChevronDown, Close } from "@vicons/ionicons5"
+import { VueDraggable } from 'vue-draggable-plus'
 import TerminalVue from '@/components/Terminal.vue'
 import StartupModalVue from "@/components/StartupModal.vue";
 
@@ -517,6 +528,7 @@ watch(documentTitle, () => {
   display: flex;
   width: 100%;
   height: 35px;
+  user-select: none;
 
   .tab {
     height: 100%;
@@ -654,5 +666,21 @@ watch(documentTitle, () => {
     margin-top: 4px;
     padding-left: 4px;
   }
+}
+
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
+}
+
+.fade-leave-active {
+  position: absolute;
 }
 </style>
