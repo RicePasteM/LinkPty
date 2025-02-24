@@ -164,8 +164,10 @@ class TerminalManager:
                     await self.on_message(ws)
             except websockets.exceptions.ConnectionClosedError as e:
                 print(f"Connection closed: {e}. Reconnecting in 5 seconds...")
+                await asyncio.sleep(4)
             except Exception as e:
                 print(f"Unexpected error: {e}. Reconnecting in 5 seconds...")
+                await asyncio.sleep(4)
 
 def run_terminal_manager():
     parser = argparse.ArgumentParser(description='Run the terminal manager.')

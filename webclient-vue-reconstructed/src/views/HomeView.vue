@@ -5,7 +5,7 @@
         <span class="name" style="display: flex; align-items:center; font-family: DatCub;">
           <img src="@/assets/logo.png" alt="" style="height: 18px; margin: 0 8px; "> LinkPty </span>
       </div>
-      <VueDraggable style="display: flex" v-model="tabs" target=".sort-target" :animation="150" filter=".undraggable">
+      <VueDraggable style="display: flex" v-model="tabs" target=".sort-target" :animation="150" filter=".undraggable" @change="handleChangeTerminalSort">
         <TransitionGroup
             type="transition"
             tag="div"
@@ -22,6 +22,12 @@
                 <Close />
               </n-icon>
             </button>
+          </div>
+          <div class="newtab" style="display: flex; justify-content: center; align-items: center;" @click="handleCreateNewTab">
+            <n-icon size="16" v-show="!isNewTabLoading">
+              <Add />
+            </n-icon>
+            <n-spin size="small" style="transform: scale(.5);" v-show="isNewTabLoading"/>
           </div>
         </TransitionGroup>
       </VueDraggable>
@@ -115,21 +121,28 @@
       找到 {{ currentMatch.length }} 个匹配项
     </div> -->
   </div>
+
+  <n-modal v-model:show="showLogDownloadModal" transform-origin="center" :mask-closable="false" display-directive="show" preset="card" 
+           :style="{'width': '500px'}" title="日志下载" @after-leave="handleCloseDownloadModal">
+    <DownloadLogVue ref="logDownloader" @close="showLogDownloadModal = false">
+    </DownloadLogVue>
+  </n-modal>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick, computed, watch } from 'vue'
 import { useMessage, useModal } from 'naive-ui'
-import { SearchOutline, SettingsOutline, ChevronUp, ChevronDown, Close } from "@vicons/ionicons5"
+import { SearchOutline, SettingsOutline, ChevronUp, ChevronDown, Close, Add } from "@vicons/ionicons5"
 import { VueDraggable } from 'vue-draggable-plus'
 import TerminalVue from '@/components/Terminal.vue'
 import StartupModalVue from "@/components/StartupModal.vue";
+import DownloadLogVue from "@/components/DownloadLog.vue"
 
 const documentTitle = ref("LinkPty - 跨网伪终端穿透工具")
 
-const SERVER_URL = "linkpty.codesocean.top:43143";
+let SERVER_URL = "linkpty.codesocean.top:43143";
 
-const savedFont = localStorage.getItem('terminalFont') || 'consolas';
+const savedFont = localStorage.getItem('terminalFont') || 'Consolas';
 const savedFontSize = localStorage.getItem('terminalFontSize') || '16';
 const terminalStyle = reactive({
   fontFamily: savedFont, fontSize: savedFontSize
@@ -140,6 +153,7 @@ const message = useMessage()
 let tabs = ref([]);
 let selectedTab = ref(undefined);
 let termRefs = ref({});
+const isNewTabLoading = ref(false);
 
 let socket = undefined;
 
@@ -157,13 +171,14 @@ const showStartupModal = ref(true);
 
 const startConnectionForm = reactive({
   key: undefined,
-  serverUrl: "linkpty.codesocean.top:43143"
+  serverUrl: localStorage.getItem('serverUrl') || 'linkpty.codesocean.top:43143'
 })
 
 let key = "";
 
 const handleStartConnection = () => {
   // 保存到历史中
+  SERVER_URL = startConnectionForm.serverUrl;
   key = startConnectionForm.key;
   documentTitle.value = key + " - " + documentTitle.value;
   showStartupModal.value = false;
@@ -234,6 +249,7 @@ function createWebsocket() {
 
 
 function handleCreateNewTab() {
+  if(isNewTabLoading.value) return;
   fetch(`http://${SERVER_URL}/create_terminal?key=${key}`, {
     method: 'GET',
     headers: new Headers(),
@@ -241,6 +257,7 @@ function handleCreateNewTab() {
   })
     .then(response => response.text())
     .then(result => {
+      isNewTabLoading.value = true;
       result = JSON.parse(result);
       if (result.result != "success") {
         message.info(result.msg)
@@ -250,6 +267,7 @@ function handleCreateNewTab() {
 }
 
 function handleCreateNewTabDone(terminalIndex, isOnline = true) {
+  isNewTabLoading.value = false;
   tabs.value.push(
     {
       name: "新标签",
@@ -380,42 +398,11 @@ const openSettings = () => {
   showSettingsModal.value = true
 }
 
-const downloadTerminalLog = async () => {
-  if (!selectedTab.value) return;
+const handleChangeTerminalSort = (event) => {
+  console.log(event)
+}
 
-  try {
-    message.loading("已经开始下载（速度较慢）请耐心等待。");
-    const response = await fetch(`http://${SERVER_URL}/download_terminal_log?key=${key}&terminal_index=${selectedTab.value.tabIndex}`);
-    const result = await response.json();
 
-    if (result.result === "success") {
-      // 创建当前时间戳
-      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const filename = `terminal_${key}_${selectedTab.value.tabIndex}_${timestamp}.log`;
-
-      // 创建 Blob 对象
-      const blob = new Blob([result.content], { type: 'text/plain' });
-
-      // 创建下载链接并触发下载
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-
-      // 清理
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-
-      message.success("日志下载成功")
-    } else {
-      message.error("日志下载失败")
-    }
-  } catch (error) {
-    message.error("无法连接至服务器")
-  }
-};
 
 // 搜索相关功能
 
@@ -500,6 +487,24 @@ watch(documentTitle, () => {
 }, {
   immediate: true
 })
+
+// 日志下载相关功能
+const showLogDownloadModal = ref(false);
+const logDownloader = ref();
+
+const downloadTerminalLog = async () => {
+  if (!selectedTab.value) return;
+
+  showLogDownloadModal.value = true;
+
+  nextTick(() => {
+    logDownloader.value.downloadLog(SERVER_URL, key, selectedTab.value.tabIndex);
+  })
+};
+
+const handleCloseDownloadModal = async () => {
+  logDownloader.value.stopDownload();
+}
 
 </script>
 
@@ -595,16 +600,18 @@ watch(documentTitle, () => {
     }
   }
 
-  .tab.new {
-    width: 20px;
+  .newtab{
+    width: 40px;
     justify-content: center;
+    cursor: pointer;
+    transition: all .3s;
   }
 
-  .tab:hover {
+  .tab:hover, .newtab:hover {
     background-color: #EAEAEA;
   }
 
-  .tab:active {
+  .tab:active, .newtab:active {
     transform: scale(0.96);
   }
 

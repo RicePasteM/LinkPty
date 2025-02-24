@@ -1,0 +1,101 @@
+bash: cannot set terminal process group (374): Inappropriate ioctl for device
+bash: no job control in this shell
+bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ ls
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ cd /
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ ; ls
+[?2004l[0m[01;34mDocker[0m  [01;36mbin[0m  [01;34mboot[0m  [01;34mdev[0m  [01;34metc[0m  [01;34mhome[0m  [01;32minit[0m  [01;36mlib[0m  [01;36mlib32[0m  [01;36mlib64[0m  [01;36mlibx32[0m  [01;34mlost+found[0m  [01;34mmedia[0m  [01;34mmnt[0m  [01;34mopt[0m  [01;34mproc[0m  [01;34mroot[0m  [01;34mrun[0m  [01;36msbin[0m  [01;34msnap[0m  [01;34msrv[0m  [01;34msys[0m  [30;42mtmp[0m  [01;34musr[0m  [01;34mvar[0m
+[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ cd mnt
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt[00m$ ls
+[?2004l[0m[34;42mc[0m  [34;42md[0m  [34;42me[0m  [34;42mf[0m  [30;42mwsl[0m  [30;42mwslg[0m
+[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt[00m$ cd d
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt/d[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt/d[00m$ ls
+[?2004l[0m[34;42m'$RECYCLE.BIN'[0m
+[34;42m'01642 - '$'\351\231\210\345\244\251\302\267''Rust'$'\347\274\226\347\250\213\347\254\254\344\270\200\350\257\276'[0m
+[34;42m'Archived Projects'[0m
+ [34;42mLenovoDrivers[0m
+ [34;42mLinkPty[0m
+ [34;42mMCMods[0m
+ [34;42mMStar[0m
+ [34;42mOutSourcing[0m
+ [34;42mProject-AnyTex[0m
+ [34;42mProject-ExpressHelper[0m
+ [34;42mProject-HFUTCat[0m
+ [34;42mProject-HermesBot[0m
+ [34;42mProject-LogHome[0m
+ [34;42mProject-OceanStorage[0m
+ [34;42mProject-OneDeckv2[0m
+ [34;42mProject-PixelRealm[0m
+ [34;42mProject-QQMessageSender[0m
+ [34;42mProject-grade_submission_system[0m
+ [34;42mSEEDRONERESOURCEBASE[0m
+[01;34m'System Volume Information'[0m
+ [34;42mW2xExTmp[0m
+ [34;42mWaifu2x-Extension-GUI-v3.111.01-Win64[0m
+ [34;42miFontsClientFileCache[0m
+ [34;42mpjt-250220-zxy[0m
+[34;42m''$'\345\233\276\345\272\223\345\244\207\344\273\275'[0m
+[34;42m''$'\345\255\246\346\240\241\350\265\204\346\226\231'[0m
+[34;42m''$'\345\256\232\345\210\266\347\272\247\345\267\245\344\275\234\345\236\213''PPT'$'\350\256\276\350\256\241\347\201\265\346\204\237\346\211\213\345\206\214''-'$'\345\256\214\346\225\264\346\211\223\345\214\205\347\211\210'[0m[K
+[34;42m''$'\345\256\232\345\210\266\347\272\247\346\264\273\345\212\250\346\216\250\345\271\277''PPT'$'\350\256\276\350\256\241\347\201\265\346\204\237\346\211\213\345\206\214''-'$'\345\256\214\346\225\264\346\211\223\345\214\205\347\211\210'[0m[K
+[34;42m''$'\345\277\253\351\200\222\350\264\246\345\215\225'[0m
+[34;42m''$'\346\225\260\346\215\256\345\272\223''SQL'$'\346\226\207\344\273\266\345\244\207\344\273\275'[0m
+[34;42m''$'\346\226\271\345\234\206\344\271\213\345\244\226\350\256\276\345\256\232\351\233\206'[0m
+[34;42m''$'\346\241\214\351\235\242\345\244\207\344\273\275'[0m
+[34;42m''$'\350\207\252\345\212\250\351\251\276\351\251\266''Daily'$'\350\257\276\347\250\213'[0m
+[34;42m''$'\351\241\271\347\233\256''-'$'\345\216\237\346\234\250\347\244\276\345\214\272'[0m
+[34;42m''$'\351\241\271\347\233\256''-'$'\345\216\237\346\234\250\347\244\276\345\214\272''-'$'\346\226\260'[0m
+[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt/d[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt/d[00m$ cd ..
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt[00m$ ls
+[?2004l[0m[34;42mc[0m  [34;42md[0m  [34;42me[0m  [34;42mf[0m  [30;42mwsl[0m  [30;42mwslg[0m
+[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt[00m$ cd d/link     /Linkpty   Pty
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt/d/LinkPty[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt/d/LinkPty[00m$ ls
+[?2004l[0m[34;42mDocker-Client[0m  [01;32mLICENSE[0m  [34;42mLinkPty_Server[0m  [01;32mREADME.md[0m  [34;42mlink_pty_pkg[0m  [34;42mwebclient[0m  [34;42mwebclient-vue-reconstructed[0m
+[?2004h]0;ricepastem@RicePasteM-WorkStation: /mnt/d/LinkPty[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/mnt/d/LinkPty[00m$ cd /
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ ls
+[?2004l[0m[01;34mDocker[0m  [01;36mbin[0m  [01;34mboot[0m  [01;34mdev[0m  [01;34metc[0m  [01;34mhome[0m  [01;32minit[0m  [01;36mlib[0m  [01;36mlib32[0m  [01;36mlib64[0m  [01;36mlibx32[0m  [01;34mlost+found[0m  [01;34mmedia[0m  [01;34mmnt[0m  [01;34mopt[0m  [01;34mproc[0m  [01;34mroot[0m  [01;34mrun[0m  [01;36msbin[0m  [01;34msnap[0m  [01;34msrv[0m  [01;34msys[0m  [30;42mtmp[0m  [01;34musr[0m  [01;34mvar[0m
+[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: /[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m/[00m$ 

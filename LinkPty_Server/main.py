@@ -246,7 +246,19 @@ async def reset_terminal(key: str, terminal_index: int):
         return {"result": "success"}
     else:
         return {"result": "fail", "msg": "主机不存在"}
- 
+    
+
+@app.get("/start_download_terminal_log")
+async def start_download_terminal_log(key: str, terminal_index: int):
+    try:
+        log_file = f"./data/terminal_{key}_{terminal_index}.txt"
+        if os.path.exists(log_file):
+            return {"result": "success", "size": os.path.getsize(log_file)}
+        return {"result": "fail", "msg": "Log file not found"}
+    except Exception as e:
+        return {"result": "fail", "msg": str(e)}
+    
+
 @app.get("/download_terminal_log")
 async def download_terminal_log(key: str, terminal_index: int):
     try:

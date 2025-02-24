@@ -26,10 +26,23 @@
                     </div>
                 </n-tab-pane>
                 <n-tab-pane name="options" tab="选项">
-                    <n-form :model="startConnectionForm" :rules="{ serverUrl: { required: true, trigger: ['blur', 'input'], message: '请输入 服务器 URL' } }" label-placement="left">
+                    <n-form :model="startConnectionForm" :rules="{ serverUrl: { required: true, trigger: ['blur', 'input'], message: '请输入 服务器 URL，留空为默认' } }" label-placement="left">
                         <n-form-item label="服务器 URL" path="serverUrl">
-                            <n-input type="text" size="large" placeholder="请输入服务器 URL" v-model:value="startConnectionForm.serverUrl"/>
+                            <n-input type="text" size="large" placeholder="请输入服务器 URL，留空为默认" v-model:value="startConnectionForm.serverUrl" @blur="checkEmpty"/>
+                            <n-tooltip placement="bottom" trigger="hover">
+                                <template #trigger>
+                                    <n-button size="tiny" tertiary circle strong style="margin: 0 10px;">
+                                        <template #icon>
+                                            <n-icon><Help /></n-icon>
+                                        </template>
+                                    </n-button>
+                                </template>
+                                    服务器 URL 用于指定中转服务器的地址和端口，格式为 <code style="font-family: consolas;">hostname:port</code>。
+                                    <br>
+                                    如果你不知道该填写什么，请保持默认值。
+                            </n-tooltip>
                         </n-form-item>
+                        
                     </n-form>
                 </n-tab-pane>
                 <n-tab-pane name="about" tab="关于">
@@ -48,7 +61,7 @@
                     <p>
                         欢迎访问本项目的 Github，提出建议或参与项目贡献。
                     </p>
-                    <div class="confirm" style="display: flex; justify-content: center; margin: 5px 0;">
+                    <div class="confirm" style="display: flex; justify-content: center; margin: 25px 0 0 0;">
                         <n-button secondary @click="gotoGitHub" style="margin-right: 10px;">
                             <template #icon>
                                 <n-icon>
@@ -74,11 +87,12 @@
 
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
-import { LogoGithub, LogoPython, Link } from "@vicons/ionicons5"
+import { LogoGithub, LogoPython, Link, Help } from "@vicons/ionicons5"
 import { useMessage } from 'naive-ui'
 
 const message = useMessage()
 
+const defaultServerUrl = "linkpty.codesocean.top:43143"
 
 const props = defineProps({
     startConnectionForm: Object
@@ -96,9 +110,16 @@ const handleConnectBtnClicked = () => {
             if (historyKeys.length > 10) historyKeys.pop(); // 保持最多10个历史记录
             localStorage.setItem('historyKeys', JSON.stringify(historyKeys));
         }
+        localStorage.setItem('serverUrl', props.startConnectionForm.serverUrl);
         emit("startConnection");
     } else {
         message.error("连接码不能为空");
+    }
+}
+
+const checkEmpty = () => {
+    if(props.startConnectionForm.serverUrl == "") {
+        props.startConnectionForm.serverUrl = defaultServerUrl;
     }
 }
 
@@ -139,6 +160,10 @@ const gotoPypi = () => {
 
     .form {
         margin: 0 40px 40px 40px;
+
+        .explanation{
+            margin: 0;
+        }
     }
 }
 </style>

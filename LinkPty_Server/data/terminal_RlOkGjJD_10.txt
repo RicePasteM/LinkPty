@@ -1,0 +1,17 @@
+bash: cannot set terminal process group (374): Inappropriate ioctl for device
+bash: no job control in this shell
+bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ stty cols 210 rows 53
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;ricepastem@RicePasteM-WorkStation: ~[01;32mricepastem@RicePasteM-WorkStation[00m:[01;34m~[00m$ 123   
