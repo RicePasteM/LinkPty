@@ -250,6 +250,7 @@ function createWebsocket() {
 
 function handleCreateNewTab() {
   if(isNewTabLoading.value) return;
+  isNewTabLoading.value = true;
   fetch(`http://${SERVER_URL}/create_terminal?key=${key}`, {
     method: 'GET',
     headers: new Headers(),
@@ -257,13 +258,15 @@ function handleCreateNewTab() {
   })
     .then(response => response.text())
     .then(result => {
-      isNewTabLoading.value = true;
       result = JSON.parse(result);
       if (result.result != "success") {
         message.info(result.msg)
       }
     })
-    .catch(error => message.error("创建新标签时出错"));
+    .catch(error => {
+      message.error("创建新标签时出错");
+      isNewTabLoading.value = false;
+    });
 }
 
 function handleCreateNewTabDone(terminalIndex, isOnline = true) {

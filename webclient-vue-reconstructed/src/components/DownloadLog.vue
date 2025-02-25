@@ -13,21 +13,20 @@
 
         <!-- 完成提示 -->
         <div v-if="downloadComplete" class="complete-container">
-            <n-icon type="✅" size="24" color="#67C23A" />
-            <p class="success-text">下载完成！</p>
-            <n-button 
-                type="primary" 
-                class="close-btn"
-                @click="handleClose"
-            >
-                关闭窗口
-            </n-button>
+            <n-result status="success" title="下载完成">
+                <template #footer>
+                <n-button @click="handleClose">关闭窗口</n-button>
+                </template>
+            </n-result>
         </div>
 
         <!-- 错误提示 -->
         <div v-if="downloadError" class="error-container">
-            <n-icon type="❌" size="24" color="#F56C6C" />
-            <p class="error-text">{{ errorMessage }}</p>
+            <n-result status="500" title="下载失败">
+                <template #footer>
+                <n-button @click="handleClose">关闭窗口</n-button>
+                </template>
+            </n-result>
         </div>
     </div>
 </template>
@@ -87,37 +86,28 @@ const downloadLog = async (serverUrl, key, tabIndex) => {
         }
 
         const reader = downloadRes.body.getReader()
-        const chunks = []
-        let receivedLength = 0
+        let receivedText = ''
 
-        // 读取数据流
-        while(true) {
+        while (true) {
             const { done, value } = await reader.read()
-            if(done) break
-
-            chunks.push(value)
-            receivedLength += value.length
-            
-            // 更新进度
-            progress.value = (receivedLength / startData.size) * 100
-            downloadedSize.value = formatSize(receivedLength)
-            if(stillDownload == false) {
-                reader.cancel();
+            if (done) break
+            receivedText += new TextDecoder().decode(value)
+            if (stillDownload == false) {
+                reader.cancel()
                 message.info("下载已中断")
-                break;
+                break
             }
         }
 
-        // 生成文件
-        const content = new Uint8Array(receivedLength)
-        let position = 0
-        chunks.forEach(chunk => {
-            content.set(chunk, position)
-            position += chunk.length
-        })
+        // 解析 JSON 并提取 content
+        const jsonData = JSON.parse(receivedText)
+        let logContent = jsonData.content || '下载内容为空'
 
-        // 创建下载
-        const blob = new Blob([content])
+        // 可选：去除 ANSI 颜色转义字符
+        logContent = logContent.replace(/\x1B\[[0-9;]*[mK]/g, '')
+
+        // 创建文件下载
+        const blob = new Blob([logContent], { type: 'text/plain' })
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
